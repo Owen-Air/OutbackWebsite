@@ -169,6 +169,7 @@
 <script>
 function checkAccess() {
   const password = document.getElementById('accessPassword').value;
+  alert('Password entered: ' + password);
   if (password === 'HoolaHooch') {
     document.getElementById('coming-soon').style.display = 'none';
     document.getElementById('main-site').style.display = 'block';
