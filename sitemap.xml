@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://outback.im/</loc><priority>1.0</priority></url>
-  <url><loc>https://outback.im/spaces</loc><priority>0.9</priority></url>
-  <url><loc>https://outback.im/events</loc><priority>0.8</priority></url>
-  <url><loc>https://outback.im/menu</loc><priority>0.8</priority></url>
-  <url><loc>https://outback.im/team</loc><priority>0.7</priority></url>
-  <url><loc>https://outback.im/history</loc><priority>0.7</priority></url>
-  <url><loc>https://outback.im/find-us</loc><priority>0.8</priority></url>
-  <url><loc>https://outback.im/contact</loc><priority>0.8</priority></url>
+  <url><loc>https://theoutback.im/</loc><priority>1.0</priority></url>
+  <url><loc>https://theoutback.im/spaces</loc><priority>0.9</priority></url>
+  <url><loc>https://theoutback.im/events</loc><priority>0.8</priority></url>
+  <url><loc>https://theoutback.im/menu</loc><priority>0.8</priority></url>
+  <url><loc>https://theoutback.im/team</loc><priority>0.7</priority></url>
+  <url><loc>https://theoutback.im/history</loc><priority>0.7</priority></url>
+  <url><loc>https://theoutback.im/find-us</loc><priority>0.8</priority></url>
+  <url><loc>https://theoutback.im/contact</loc><priority>0.8</priority></url>
 </urlset>
