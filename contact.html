@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — The Outback</title>
+<meta name="description" content="Get in touch with The Outback, Douglas. Bookings, private hire, enquiries.">
+<meta property="og:title" content="Contact — The Outback">
+<meta property="og:description" content="Get in touch with The Outback. Bookings, private hire, enquiries — Barrack Street, Douglas, Isle of Man.">
+<meta property="og:image" content="/images/the-outback-barrack-street-douglas.jpg">
+<meta name="theme-color" content="#080808">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/images/the-outback.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="/style.css" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body data-nav="fixed">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav id="nav">
+  <a href="/" class="nav-logo"><img src="/images/the-outback.png" alt="The Outback"></a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" style="display:flex"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-mobile-overlay" id="mobileNav">
+  <a href="/">Home</a>
+  <a href="/spaces">Spaces</a>
+  <a href="/events">Events</a>
+  <a href="/menu">Drinks</a>
+  <a href="/team">Team</a>
+  <a href="/history">History</a>
+  <a href="/find-us">Find Us</a>
+  <a href="/contact" class="active">Contact</a>
+  <p class="nav-mobile-sub">Barrack Street · Douglas · Isle of Man</p>
+</div>
+
+<main id="main-content">
+<div class="page-header"><div class="page-header-accent"></div>
+  <div class="hero-grain"></div>
+  <div class="page-header-content">
+    <p class="section-label reveal">Get In Touch</p>
+    <h1 class="section-title reveal" style="font-size:clamp(60px,10vw,120px)">CONTACT</h1>
+    <p class="spaces-copy">Table booking, private hire, group night out, or just a question — we're here.</p>
+  </div>
+</div>
+
+<div class="contact-page-grid">
+  <div class="contact-page-block">
+    <p class="info-label" style="margin-bottom:2rem">Send Us a Message</p>
+    <!-- ACTION: Replace the action URL below with your form service endpoint -->
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="576014a8-99fd-42c1-84e2-826a31705d39">
+      <input type="hidden" name="subject" value="New enquiry from The Outback website">
+      <input type="hidden" name="redirect" value="https://web3forms.com/success">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone (optional)</label>
+          <input class="form-input" type="tel" id="phone" name="phone" placeholder="+44 7xxx xxxxxx">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enquiry">Enquiry Type</label>
+          <select class="form-select" id="enquiry" name="enquiry">
+            <option value="general">General Enquiry</option>
+            <option value="table">Table Reservation</option>
+            <option value="private-hire">Private Hire</option>
+            <option value="group">Group Booking</option>
+            <option value="birthday">Birthday Package</option>
+            <option value="corporate">Corporate Event</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="date">Preferred Date (optional)</label>
+        <input class="form-input" type="date" id="date" name="date">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what you're after..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Enquiry</button>
+      <p class="form-note">We'll get back to you within 24 hours. For urgent bookings, call or DM on socials.</p>
+    </form>
+  </div>
+  <div class="contact-page-block">
+    <p class="info-label" style="margin-bottom:2rem">Contact Details</p>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">✆</div>
+      <div class="contact-detail-text">
+        <span class="contact-detail-label">Phone</span>
+        <a href="tel:+441624661547" class="contact-detail-value" href="tel:+441624661547">+44 1624 661547</a>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">@</div>
+      <div class="contact-detail-text">
+        <span class="contact-detail-label">Email</span>
+        <a class="contact-detail-value" id="emailLink">Loading...</a>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">FB</div>
+      <div class="contact-detail-text">
+        <span class="contact-detail-label">Facebook</span>
+        <a href="https://www.facebook.com/theoutbackiom" class="contact-detail-value">/theoutbackiom</a>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">TK</div>
+      <div class="contact-detail-text">
+        <span class="contact-detail-label">TikTok</span>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem">Address</p>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.8">The Outback<br>Barrack Street<br>Douglas<br>Isle of Man<br>IM1 2AF</p>
+    </div>
+  </div>
+</div>
+
+
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><img loading="lazy" src="/images/the-outback.png" alt="The Outback"></div>
+      <p class="footer-tagline">Barrack Street, Douglas, Isle of Man. Late night bar &amp; club. The island's night out.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/theoutbackiom" class="social-icon">FB</a>
+      </div>
+    </div>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <ul class="footer-links">
+        <li><a href="/spaces">Spaces</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/menu">Drinks</a></li>
+        <li><a href="/team">Team</a></li>
+        <li><a href="/history">History</a></li>
+        <li><a href="/find-us">Find Us</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">The Venue</p>
+      <ul class="footer-links">
+        <li><a href="/spaces">Main Bar</a></li>
+        <li><a href="/spaces">Dancefloor</a></li>
+        <li><a href="/spaces">Top Bar</a></li>
+        <li><a href="/spaces">Middle Bar</a></li>
+        <li><a href="/spaces">Outside Terrace</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Bookings</p>
+      <ul class="footer-links">
+        <li><a href="/contact">Table Reservations</a></li>
+        <li><a href="/contact">Private Hire</a></li>
+        <li><a href="/contact">Group Bookings</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 The Outback — outback.im</span>
+    <span>Barrack Street · Douglas · Isle of Man · IM1 2AF</span>
+  </div>
+</footer>
+</main>
+<button class="back-to-top" id="backToTop" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to improve your experience. No tracking, no ads — just making sure the site works properly.</p>
+  <div class="cookie-btns">
+    <button class="cookie-decline" id="cookieDecline">Decline</button>
+    <button class="cookie-accept" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script src="/main.js" defer></script>
+<script src="/contact.js" defer></script>
+
+</body>
+</html>
