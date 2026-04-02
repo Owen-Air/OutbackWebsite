@@ -164,6 +164,11 @@ section{padding:clamp(4rem,8vw,7rem) clamp(2rem,5vw,4rem)}
 .sound-bars{display:flex;gap:3px;align-items:flex-end;height:32px}
 .sound-bar{width:3px;background:rgba(8,8,8,0.45);border-radius:2px;animation:soundBounce var(--d) ease-in-out infinite alternate}
 
+/* ---- SATURDAY MOTION STRIP ---- */
+.saturday-section{background:var(--black);padding:clamp(2rem,5vw,3.5rem) clamp(2rem,5vw,4rem)}
+.saturday-media{border:1px solid var(--subtle);border-radius:var(--radius);overflow:hidden;background:#000;box-shadow:var(--shadow-soft)}
+.saturday-video{display:block;width:100%;height:clamp(260px,52vw,560px);object-fit:cover}
+
 /* ---- GALLERY MOSAIC ---- */
 .gallery-section{background:var(--black)}
 .gallery-mosaic{column-count:3;column-gap:5px;margin-top:2.5rem}
