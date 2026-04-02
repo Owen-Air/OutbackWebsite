@@ -426,6 +426,88 @@ body{animation:pageIn 0.4s ease forwards}
   color:var(--black);
   padding:12px 28px;
   border:none;
+
+   /* ===== MOBILE FIXES ===== */
+
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Prevent content getting cut off */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Layout padding */
+  .container,
+  .section,
+  .content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Headings tighter */
+  h1, h2, h3 {
+    line-height: 1.2;
+  }
+
+  /* NAVBAR */
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .logo img {
+    max-height: 40px;
+  }
+
+  /* HERO / BUTTONS */
+  .hero,
+  .hero-content {
+    padding: 40px 16px;
+    text-align: center;
+  }
+
+  .btn,
+  button {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* REMOVE BUSY ELEMENTS */
+  .marquee,
+  .scroll-strip,
+  .ticker {
+    display: none !important;
+  }
+
+  /* FOOTER SIMPLIFIED */
+  .footer-columns {
+    display: none !important;
+  }
+
+  .footer {
+    padding: 40px 16px;
+  }
+
+  .footer p {
+    word-wrap: break-word;
+  }
+
+  /* GENERAL SPACING */
+  section {
+    margin-bottom: 40px;
+  }
+}
   font-weight:600;
   cursor:pointer;
   border-radius:3px;
