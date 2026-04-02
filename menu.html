@@ -41,6 +41,11 @@
 
 .logo-pill{background:rgba(255,255,255,0.9);border-radius:6px;padding:4px 10px}
 .logo-pill img{filter:none!important}
+
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0.75rem;margin-top:0.75rem}
+.brand-card{background:var(--panel);border:1px solid rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;gap:0.5rem;padding:0.65rem}
+.brand-card img{height:24px;width:auto;max-width:80px;object-fit:contain}
+.brand-card span{font-family:var(--fc);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
 </style>
 </head>
 <body data-nav="fixed">
@@ -206,19 +211,51 @@
     </div>
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange);margin-bottom:0.75rem">BOTTLES</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:300;line-height:2.2">Corona<br>Peroni<br>Budweiser<br>Desperados<br>Magners Cider<br>WKD<br>Isle of Cider<br>Rekorderlig Strawberry &amp; Lime<br>Bacardi Breezer Orange<br>Bacardi Breezer Lime<br>Bacardi Breezer Watermelon<br>Smirnoff Ice</p>
+      <div class="brand-grid">
+        <div class="brand-card"><img src="/images/logo-corona.png" alt="Corona"><span>Corona</span></div>
+        <div class="brand-card"><img src="/images/logo-peroni.png" alt="Peroni"><span>Peroni</span></div>
+        <div class="brand-card"><img src="/images/logo-budweiser.png" alt="Budweiser"><span>Budweiser</span></div>
+        <div class="brand-card"><img src="/images/logo-desperados.png" alt="Desperados"><span>Desperados</span></div>
+        <div class="brand-card"><img src="/images/logo-magners.png" alt="Magners"><span>Magners</span></div>
+        <div class="brand-card"><img src="/images/logo-wkd.png" alt="WKD"><span>WKD</span></div>
+        <div class="brand-card"><img src="/images/logo-isleofcider.png" alt="Isle of Cider"><span>Isle of Cider</span></div>
+        <div class="brand-card"><img src="/images/logo-rekorderlig.png" alt="Rekorderlig"><span>Rekorderlig</span></div>
+        <div class="brand-card"><img src="/images/logo-bacardi-breezer-orange.png" alt="Bacardi Breezer Orange"><span>Bacardi Breezer Orange</span></div>
+        <div class="brand-card"><img src="/images/logo-bacardi-breezer-lime.png" alt="Bacardi Breezer Lime"><span>Bacardi Breezer Lime</span></div>
+        <div class="brand-card"><img src="/images/logo-bacardi-breezer-watermelon.png" alt="Bacardi Breezer Watermelon"><span>Bacardi Breezer Watermelon</span></div>
+        <div class="brand-card"><img src="/images/logo-smirnoff-ice.png" alt="Smirnoff Ice"><span>Smirnoff Ice</span></div>
+      </div>
     </div>
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange);margin-bottom:0.75rem">CANS</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:300;line-height:2.2">Hoola Hooch Blue<br>Hoola Hooch Yellow<br>Hoola Hooch Pink</p>
+      <div class="brand-grid">
+        <div class="brand-card"><img src="/images/logo-hooch.png" alt="Hoola Hooch Blue"><span>Hoola Hooch Blue</span></div>
+        <div class="brand-card"><img src="/images/logo-hooch.png" alt="Hoola Hooch Yellow"><span>Hoola Hooch Yellow</span></div>
+        <div class="brand-card"><img src="/images/logo-hooch.png" alt="Hoola Hooch Pink"><span>Hoola Hooch Pink</span></div>
+      </div>
     </div>
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange);margin-bottom:0.75rem">ALCOHOL FREE</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:300;line-height:2.2">Guinness Zero<br>Amstel 0%</p>
+      <div class="brand-grid">
+        <div class="brand-card"><img src="/images/logo-guinness.png" alt="Guinness Zero"><span>Guinness Zero</span></div>
+        <div class="brand-card"><img src="/images/logo-amstel.png" alt="Amstel 0%"><span>Amstel 0%</span></div>
+      </div>
     </div>
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange);margin-bottom:0.75rem">SOFT DRINKS</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.7);font-weight:300;line-height:2.2">Coca-Cola<br>Diet Coke<br>Fanta<br>Fanta Lemon<br>Dr Pepper<br>R Whites Lemonade<br>Appletiser<br>Fizzy Vimto<br>J20<br>Harrogate Water<br>Evian Water</p>
+      <div class="brand-grid">
+        <div class="brand-card"><img src="/images/logo-coke.png" alt="Coca-Cola"><span>Coca-Cola</span></div>
+        <div class="brand-card"><img src="/images/logo-dietcoke.png" alt="Diet Coke"><span>Diet Coke</span></div>
+        <div class="brand-card"><img src="/images/logo-fanta.png" alt="Fanta"><span>Fanta</span></div>
+        <div class="brand-card"><img src="/images/logo-fanta-lemon.png" alt="Fanta Lemon"><span>Fanta Lemon</span></div>
+        <div class="brand-card"><img src="/images/logo-drpepper.png" alt="Dr Pepper"><span>Dr Pepper</span></div>
+        <div class="brand-card"><img src="/images/logo-rwhites.png" alt="R Whites Lemonade"><span>R Whites Lemonade</span></div>
+        <div class="brand-card"><img src="/images/logo-appletiser.png" alt="Appletiser"><span>Appletiser</span></div>
+        <div class="brand-card"><img src="/images/logo-vimto.png" alt="Fizzy Vimto"><span>Fizzy Vimto</span></div>
+        <div class="brand-card"><img src="/images/logo-j20.png" alt="J20"><span>J20</span></div>
+        <div class="brand-card"><img src="/images/logo-harrogate.png" alt="Harrogate Water"><span>Harrogate Water</span></div>
+        <div class="brand-card"><img src="/images/logo-evian.png" alt="Evian Water"><span>Evian Water</span></div>
+      </div>
     </div>
   </div>
 </section>
