@@ -1,2 +1,2 @@
 # Redirect www to apex
-https://www.outback.im/* https://outback.im/:splat 301
+https://www.outback.im/* /:splat 301
