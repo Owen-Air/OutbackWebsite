@@ -16,6 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitButton = form.querySelector('.form-submit');
     if (!submitButton) return;
 
+    // Rate limiting: 1 submission per minute
+    const lastSubmit = localStorage.getItem('contactFormLastSubmit');
+    const now = Date.now();
+    if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) { // 60 seconds
+      const remaining = Math.ceil((60000 - (now - parseInt(lastSubmit))) / 1000);
+      showOverlay('TOO FAST', `Please wait ${remaining} seconds before submitting another enquiry.`);
+      return;
+    }
+
     const originalText = submitButton.textContent;
     submitButton.textContent = 'SENDING...';
     submitButton.style.opacity = '0.6';
@@ -54,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (data.success) {
         form.reset();
+        localStorage.setItem('contactFormLastSubmit', Date.now().toString());
         submitButton.textContent = 'SENT ✓';
         submitButton.style.background = '#95D600';
         submitButton.style.opacity = '1';
