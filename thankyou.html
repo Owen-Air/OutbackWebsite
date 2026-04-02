@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — The Outback</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#080808">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/png" href="/images/the-outback.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="/style.css" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.thankyou-wrap {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--black);
+  position: relative;
+}
+.thankyou-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 40%, rgba(212,78,18,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.thankyou-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+}
+.thankyou-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--orange);
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.thankyou-label {
+  font-family: var(--fc);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1rem;
+}
+.thankyou-heading {
+  font-family: var(--fd);
+  font-size: clamp(56px, 10vw, 110px);
+  letter-spacing: 0.03em;
+  color: var(--text);
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+}
+.thankyou-copy {
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.thankyou-countdown {
+  font-family: var(--fc);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 1.5rem;
+}
+.thankyou-countdown span {
+  color: var(--orange);
+  font-weight: 600;
+}
+.thankyou-back {
+  font-family: var(--fc);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--subtle);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.thankyou-back:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+</style>
+</head>
+<body data-nav="fixed">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav id="nav">
+  <a href="/" class="nav-logo"><img src="/images/the-outback.png" alt="The Outback"></a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" style="display:flex"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-mobile-overlay" id="mobileNav">
+  <a href="/">Home</a>
+  <a href="/spaces">Spaces</a>
+  <a href="/events">Events</a>
+  <a href="/menu">Drinks</a>
+  <a href="/team">Team</a>
+  <a href="/history">History</a>
+  <a href="/find-us">Find Us</a>
+  <a href="/contact" class="active">Contact</a>
+  <p class="nav-mobile-sub">Barrack Street · Douglas · Isle of Man</p>
+</div>
+
+<main id="main-content">
+<div class="thankyou-wrap">
+  <div class="hero-grain"></div>
+  <div class="thankyou-icon">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <p class="thankyou-label">Message Received</p>
+  <h1 class="thankyou-heading">THANK<br>YOU</h1>
+  <p class="thankyou-copy">Your enquiry has been sent. We'll get back to you within 24 hours. For urgent bookings, give us a call.</p>
+  <p class="thankyou-countdown">Taking you back in <span id="countdown">5</span>...</p>
+  <a href="/contact" class="thankyou-back">Back to contact</a>
+</div>
+</main>
+
+<script src="/main.js" defer></script>
+<script>
+  (function () {
+    var n = 5;
+    var el = document.getElementById('countdown');
+    var interval = setInterval(function () {
+      n--;
+      if (el) el.textContent = n;
+      if (n <= 0) {
+        clearInterval(interval);
+        window.location.replace('/contact');
+      }
+    }, 1000);
+  })();
+</script>
+
+</body>
+</html>
