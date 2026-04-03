@@ -93,40 +93,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const cells = Array.from(galleryMosaic.children);
     const getVideoSource = (cell) => cell.querySelector('video source')?.getAttribute('src') || '';
 
-    const mainVideoCell = cells.find((cell) => getVideoSource(cell).includes('/inside-venue-loop.mp4'));
     const video2Cell = cells.find((cell) => getVideoSource(cell).includes('/inside-venue-loop-2.mp4'));
     const video3Cell = cells.find((cell) => getVideoSource(cell).includes('/inside-venue-loop-3.mp4'));
 
-    if (mainVideoCell && video2Cell && video3Cell) {
-      const otherCells = cells.filter((cell) => cell !== mainVideoCell && cell !== video2Cell && cell !== video3Cell);
-      const totalCells = cells.length;
-      const availableSlots = Array.from({ length: Math.max(0, totalCells - 1) }, (_, i) => i + 1);
+    if (video2Cell && video3Cell) {
+      const photoCells = cells.filter((cell) => cell !== video2Cell && cell !== video3Cell);
+      const slots = Array.from({ length: photoCells.length + 1 }, (_, i) => i);
 
-      if (availableSlots.length >= 2) {
-        const slotA = availableSlots[Math.floor(Math.random() * availableSlots.length)];
-        const nonAdjacentSlots = availableSlots.filter((slot) => Math.abs(slot - slotA) > 1);
+      if (slots.length >= 2) {
+        const slotA = slots[Math.floor(Math.random() * slots.length)];
+        const remainingSlots = slots.filter((slot) => slot !== slotA);
+        const slotB = remainingSlots[Math.floor(Math.random() * remainingSlots.length)];
+        const randomClips = Math.random() < 0.5 ? [video2Cell, video3Cell] : [video3Cell, video2Cell];
+        const slotToVideo = new Map([
+          [slotA, randomClips[0]],
+          [slotB, randomClips[1]]
+        ]);
+        const reorderedCells = [];
 
-        if (nonAdjacentSlots.length) {
-          const slotB = nonAdjacentSlots[Math.floor(Math.random() * nonAdjacentSlots.length)];
-          const randomClips = Math.random() < 0.5 ? [video2Cell, video3Cell] : [video3Cell, video2Cell];
-          const reorderedCells = new Array(totalCells);
-          let otherIndex = 0;
-
-          reorderedCells[0] = mainVideoCell;
-          reorderedCells[slotA] = randomClips[0];
-          reorderedCells[slotB] = randomClips[1];
-
-          for (let i = 1; i < totalCells; i += 1) {
-            if (!reorderedCells[i]) {
-              reorderedCells[i] = otherCells[otherIndex];
-              otherIndex += 1;
-            }
-          }
-
-          const fragment = document.createDocumentFragment();
-          reorderedCells.forEach((cell) => fragment.appendChild(cell));
-          galleryMosaic.appendChild(fragment);
+        for (let i = 0; i <= photoCells.length; i += 1) {
+          if (slotToVideo.has(i)) reorderedCells.push(slotToVideo.get(i));
+          if (i < photoCells.length) reorderedCells.push(photoCells[i]);
         }
+
+        const fragment = document.createDocumentFragment();
+        reorderedCells.forEach((cell) => {
+          if (cell) fragment.appendChild(cell);
+        });
+        galleryMosaic.appendChild(fragment);
       }
     }
   }
