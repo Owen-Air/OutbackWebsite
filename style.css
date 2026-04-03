@@ -908,3 +908,132 @@ body{animation:pageIn 0.4s ease forwards}
       min-height:190px;
     }
   }
+
+/* ---- MOBILE-FIRST STABILIZATION ---- */
+@media (max-width: 600px) {
+  section {
+    padding: clamp(2.25rem, 7vw, 3.25rem) 1rem;
+  }
+
+  nav {
+    height: 64px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .nav-logo img {
+    height: 70px;
+    max-width: min(46vw, 170px);
+  }
+
+  .page-header {
+    padding: 5.75rem 1rem 2.25rem;
+  }
+
+  .section-title {
+    font-size: clamp(34px, 11vw, 52px);
+    line-height: 0.95;
+  }
+
+  .hero {
+    padding: 0 1rem 2rem;
+    min-height: 84svh;
+  }
+
+  .hero-sub,
+  .spaces-copy,
+  .monster-copy,
+  .sp-desc,
+  .event-desc,
+  .hire-copy,
+  .footer-tagline,
+  .contact-detail-value,
+  .cookie-text {
+    font-size: clamp(16px, 4vw, 19px) !important;
+    line-height: 1.55;
+  }
+
+  .btn-primary,
+  .btn-ghost,
+  .form-submit {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  .gallery-mosaic {
+    column-count: 1 !important;
+    column-gap: 0 !important;
+  }
+
+  .g-cell {
+    margin-bottom: 6px;
+  }
+
+  .gallery-mosaic .g-cell img,
+  .gallery-mosaic .g-cell video {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    height: auto !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .sp-card,
+  .sp-card.alt,
+  .sp-dancefloor-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sp-photo,
+  .sp-dancefloor-video {
+    border-right: none !important;
+    border-left: none !important;
+  }
+
+  .sp-dancefloor-video {
+    border-top: 1px solid var(--subtle);
+  }
+
+  .sp-dancefloor-video video {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    object-fit: cover;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+
+  .footer-links a,
+  .social-icon {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .gallery-mosaic {
+    column-count: 2;
+  }
+
+  .gallery-mosaic .g-cell img,
+  .gallery-mosaic .g-cell video {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
