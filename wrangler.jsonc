@@ -5,12 +5,11 @@
   "observability": {
     "enabled": true
   },
+  "build": {
+    "command": "node ./scripts/prepare-assets.mjs"
+  },
   "assets": {
-    "directory": ".",
-    "exclude": [
-      ".git/**",
-      "Videos/**"
-    ]
+    "directory": "./public"
   },
   "compatibility_flags": [
     "nodejs_compat"
