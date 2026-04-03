@@ -72,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      throw new Error('Form service returned an error.');
+      throw new Error(data.message || 'Form service returned an error.');
     } catch (error) {
       submitButton.textContent = 'ERROR — TRY AGAIN';
       submitButton.style.background = '#cc3333';
       submitButton.style.opacity = '1';
+      showOverlay('SEND FAILED', error.message || 'Something went wrong. Please try again or call us directly.');
       window.setTimeout(resetButton, 3000);
     }
   });

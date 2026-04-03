@@ -32,15 +32,32 @@ export async function onRequestPost(context) {
   // Inject the secret key server-side
   formData.set('access_key', env.WEB3FORMS_KEY);
 
-  const upstream = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    body: formData,
-  });
+  let upstream;
+  try {
+    upstream = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData,
+      headers: { 'User-Agent': 'TheOutback-ContactForm/1.0' },
+    });
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ success: false, message: 'Could not reach the mail service. Please try again.' }),
+      { status: 502, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 
-  const data = await upstream.json();
+  let data;
+  try {
+    data = await upstream.json();
+  } catch {
+    return new Response(
+      JSON.stringify({ success: false, message: `Mail service returned an unexpected response (HTTP ${upstream.status}).` }),
+      { status: 502, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 
   return new Response(JSON.stringify(data), {
-    status: upstream.status,
+    status: data.success ? 200 : 400,
     headers: { 'Content-Type': 'application/json' },
   });
 }
