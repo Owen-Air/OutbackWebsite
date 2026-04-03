@@ -59,7 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         body: new FormData(form)
       });
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error(`Server error (HTTP ${response.status}). Please try again or call us directly.`);
+      }
 
       if (data.success) {
         form.reset();
