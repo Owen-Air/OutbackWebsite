@@ -1037,3 +1037,53 @@ body{animation:pageIn 0.4s ease forwards}
     grid-template-columns: 1.4fr 1fr 1fr;
   }
 }
+
+/* ---- IPHONE SAFARI TUNING ---- */
+@supports (-webkit-touch-callout: none) {
+  html {
+    min-height: -webkit-fill-available;
+  }
+
+  body {
+    min-height: -webkit-fill-available;
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+
+  nav {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
+
+  .hero {
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .nav-mobile-overlay {
+    min-height: 100svh;
+    padding-top: calc(5rem + env(safe-area-inset-top));
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .cookie-banner {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .back-to-top {
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea,
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  a,
+  button {
+    touch-action: manipulation;
+  }
+}
