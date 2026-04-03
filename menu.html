@@ -45,8 +45,10 @@
 .brand-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.9rem;margin-top:0.75rem}
 .brand-card{background:var(--panel);border:1px solid rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0.95rem;min-height:82px}
 .brand-card img{max-height:44px;width:min(100%,160px);height:auto;object-fit:contain}
-.brand-card.smirnoff-ice-card{background:#fff;border-color:#fff}
 .brand-card span{display:none}
+.brand-card.text-only{background:linear-gradient(180deg,rgba(28,27,26,1),rgba(14,14,14,1));border-color:rgba(234,155,33,0.35)}
+.brand-card.text-only img{display:none}
+.brand-card.text-only span{display:block;font-family:var(--fc);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.35;font-weight:600}
 </style>
 </head>
 <body data-nav="fixed">
@@ -205,10 +207,14 @@
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--subtle);border-radius:3px;overflow:hidden">
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem">
-        <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange)">SPIRITS &amp; MIXERS</p>
+        <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange)">SPIRITS</p>
       </div>
-      <div style="margin-bottom:1rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-smirnoff.png" alt="Smirnoff" style="height:28px;width:auto;opacity:0.8"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-jack-daniels.png" alt="Jack Daniels" style="height:28px;width:auto;opacity:0.8"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-captain-morgan.png" alt="Captain Morgan" style="height:28px;width:auto;opacity:0.8"></div>
-      <p style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.8">Full range of house and premium spirits. Smirnoff, Jack Daniels, Captain Morgan, gin, tequila &mdash; all the usual suspects plus a few you won't expect.</p>
+      <div class="brand-grid" style="margin-bottom:1rem">
+        <div class="brand-card text-only"><span>Smirnoff</span></div>
+        <div class="brand-card text-only"><span>Jack Daniels</span></div>
+        <div class="brand-card text-only"><span>Captain Morgan's</span></div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.8">Full range of house and premium spirits. Smirnoff, Jack Daniels, Captain Morgan's, gin, tequila &mdash; all the usual suspects plus a few you won't expect.</p>
     </div>
     <div style="background:var(--panel);padding:clamp(1.5rem,3vw,2.5rem)">
       <p style="font-family:var(--fd);font-size:28px;letter-spacing:0.04em;color:var(--orange);margin-bottom:0.75rem">BOTTLES &amp; CANS</p>
@@ -221,10 +227,10 @@
         <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-wkd.png" alt="WKD"><span>WKD</span></div>
         <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-isleofcider.svg" alt="Isle of Cider"><span>Isle of Cider</span></div>
         <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-rekorderlig-alt.svg" alt="Rekorderlig"><span>Rekorderlig</span></div>
-        <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-bacardi-breezer-alt.png" alt="Bacardi Breezer Orange"><span>Bacardi Breezer Orange</span></div>
-        <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-bacardi-breezer-lime.svg" alt="Bacardi Breezer Lime"><span>Bacardi Breezer Lime</span></div>
-        <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-bacardi-breezer-watermelon.svg" alt="Bacardi Breezer Watermelon"><span>Bacardi Breezer Watermelon</span></div>
-        <div class="brand-card smirnoff-ice-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-smirnoff-ice.svg" alt="Smirnoff Ice"><span>Smirnoff Ice</span></div>
+        <div class="brand-card text-only"><span>Bacardi Breezer Orange</span></div>
+        <div class="brand-card text-only"><span>Bacardi Breezer Lime</span></div>
+        <div class="brand-card text-only"><span>Bacardi Breezer Watermelon</span></div>
+        <div class="brand-card text-only"><span>Smirnoff Ice</span></div>
         <div class="brand-card"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/logo-hooch.svg" alt="Hoola Hooch Blue"><span>Hoola Hooch Blue</span></div>
       </div>
     </div>
