@@ -3,7 +3,7 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; media-src 'self' https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://api.web3forms.com; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; media-src 'self' https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; form-action 'self'; upgrade-insecure-requests
 
 /images/*
   Cache-Control: public, max-age=31536000, immutable
