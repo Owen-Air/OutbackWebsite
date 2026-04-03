@@ -16,27 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitButton = form.querySelector('.form-submit');
     if (!submitButton) return;
 
-    // Rate limiting: 1 submission per minute
-    const lastSubmit = localStorage.getItem('contactFormLastSubmit');
-    const now = Date.now();
-    if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) { // 60 seconds
-      const remaining = Math.ceil((60000 - (now - parseInt(lastSubmit))) / 1000);
-      showOverlay('TOO FAST', `Please wait ${remaining} seconds before submitting another enquiry.`);
-      return;
-    }
-
-    const originalText = submitButton.textContent;
-    submitButton.textContent = 'SENDING...';
-    submitButton.style.opacity = '0.6';
-    submitButton.disabled = true;
-
-    const resetButton = () => {
-      submitButton.textContent = originalText;
-      submitButton.style.background = '';
-      submitButton.style.opacity = '1';
-      submitButton.disabled = false;
-    };
-
     const showOverlay = (title, message) => {
       const overlay = document.createElement('div');
       overlay.className = 'form-status-overlay';
@@ -52,6 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === overlay) overlay.remove();
       });
       document.body.appendChild(overlay);
+    };
+
+    // Rate limiting: 1 submission per minute
+    const lastSubmit = localStorage.getItem('contactFormLastSubmit');
+    const now = Date.now();
+    if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) {
+      const remaining = Math.ceil((60000 - (now - parseInt(lastSubmit))) / 1000);
+      showOverlay('TOO FAST', `Please wait ${remaining} seconds before submitting another enquiry.`);
+      return;
+    }
+
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'SENDING...';
+    submitButton.style.opacity = '0.6';
+    submitButton.disabled = true;
+
+    const resetButton = () => {
+      submitButton.textContent = originalText;
+      submitButton.style.background = '';
+      submitButton.style.opacity = '1';
+      submitButton.disabled = false;
     };
 
     try {

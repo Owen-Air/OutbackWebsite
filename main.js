@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const setMobileNav = (isOpen) => {
     if (!hamburger || !mobileNav) return;
     hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
     mobileNav.classList.toggle('open', isOpen);
     body.style.overflow = isOpen ? 'hidden' : '';
   };

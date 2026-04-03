@@ -41,9 +41,10 @@
 <body data-nav="fixed">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
+<header>
 <nav id="nav">
   <a href="/" class="nav-logo"><img src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback.png" alt="The Outback"></a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu" style="display:flex"><span></span><span></span><span></span></button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav" style="display:flex"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="nav-mobile-overlay" id="mobileNav">
@@ -57,6 +58,7 @@
   <a href="/contact">Contact</a>
   <p class="nav-mobile-sub">Barrack Street &middot; Douglas &middot; Isle of Man</p>
 </div>
+</header>
 
 <main id="main-content">
 <div class="page-header"><div class="page-header-accent"></div>
@@ -124,7 +126,7 @@
       <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">1994</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE TARDIS</h2>
-      <p class="history-copy">"The Late Club at the End of the Universe." Barrack Street, Douglas, 661547. The Tardis opened on Monday 18th July 1994. Free entry Mon&ndash;Thur, Â£2 on Fridays and Saturdays. "All your favourite tunes. Smart dress not advised." This was the moment the building became a dedicated nightclub &mdash; not just reused space, but a purpose-built nightlife identity.</p>
+      <p class="history-copy">"The Late Club at the End of the Universe." Barrack Street, Douglas, 661547. The Tardis opened on Monday 18th July 1994. Free entry Mon&ndash;Thur, &pound;2 on Fridays and Saturdays. "All your favourite tunes. Smart dress not advised." This was the moment the building became a dedicated nightclub &mdash; not just reused space, but a purpose-built nightlife identity.</p>
       <div class="history-media" style="max-width:min(100%,520px)">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/history-tardis-flyer.jpg" alt="The Tardis opening flyer, 1994" style="width:100%;height:auto;display:block">
       </div>
@@ -177,6 +179,7 @@
 </section>
 
 
+<footer>
   <div class="footer-inner">
     <div>
       <div class="footer-logo"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback.png" alt="The Outback"></div>
