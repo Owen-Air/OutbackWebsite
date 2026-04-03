@@ -16,6 +16,27 @@
 <link rel="preload" href="/style.css" as="style">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<style>
+.history-story{padding:clamp(4rem,8vw,7rem) clamp(1.25rem,4.5vw,4.5rem);background:var(--black)}
+.history-content{max-width:1200px;margin:0 auto}
+.history-intro{max-width:760px;margin-bottom:3.5rem}
+.history-intro-copy{font-size:clamp(1rem,1.06vw,1.15rem);font-weight:300;color:rgba(255,255,255,0.7);line-height:1.9}
+.history-timeline{position:relative;padding-left:clamp(1.15rem,2.6vw,3.25rem)}
+.history-era{margin-bottom:clamp(3rem,6vw,5rem);position:relative}
+.history-copy{font-size:clamp(1rem,1.02vw,1.12rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:min(100%,860px);margin-bottom:1.5rem}
+.history-media{overflow:hidden;border-radius:3px;max-width:min(100%,860px)}
+.history-caption{font-family:var(--fc);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--subtle);margin-top:0.75rem}
+@media(min-width:1100px){
+  .history-intro{max-width:980px;margin-bottom:4.5rem}
+  .history-timeline{padding-left:3.75rem}
+  .history-era-dot{left:-3.95rem !important}
+  .history-copy{max-width:920px}
+}
+@media(max-width:640px){
+  .history-timeline{padding-left:1rem}
+  .history-era-dot{left:-1.25rem !important;width:8px !important;height:8px !important}
+}
+</style>
 </head>
 <body data-nav="fixed">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -47,98 +68,101 @@
   </div>
 </div>
 
-<section style="padding:clamp(4rem,8vw,7rem) clamp(2rem,5vw,4rem);background:var(--black)">
+<section class="history-story">
+
+  <div class="history-content">
 
   <!-- INTRO -->
-  <div style="max-width:700px;margin-bottom:4rem" class="sr">
-    <p style="font-size:16px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.9;margin-bottom:1.5rem">The building on Barrack Street has been at the heart of Douglas for well over a century. It's been a hall for troops, a school, a mission hall, a community club, a nightclub, and a bar. The use changed, but the purpose never did &mdash; it's always been a place where people gather. Through every era, the walls have stayed standing and the stories have kept piling up.</p>
-    <p style="font-size:16px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.9">This is its story &mdash; from the early days to the venue it is today. If you were there, you remember. If you weren't, you missed out.</p>
+  <div class="sr history-intro">
+    <p class="history-intro-copy" style="margin-bottom:1.5rem">The building on Barrack Street has been at the heart of Douglas for well over a century. It's been a hall for troops, a school, a mission hall, a community club, a nightclub, and a bar. The use changed, but the purpose never did &mdash; it's always been a place where people gather. Through every era, the walls have stayed standing and the stories have kept piling up.</p>
+    <p class="history-intro-copy">This is its story &mdash; from the early days to the venue it is today. If you were there, you remember. If you weren't, you missed out.</p>
   </div>
 
   <!-- TIMELINE -->
-  <div style="position:relative;padding-left:clamp(2rem,4vw,3.5rem)">
+  <div class="history-timeline">
 
     <!-- Timeline line -->
     <div style="position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--orange),var(--subtle) 30%,var(--subtle) 70%,var(--orange))"></div>
 
     <!-- ERA: ORIGINS -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">1860s Onwards</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE BUILDING<br>ON BARRACK STREET</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">The building appears on maps as early as the 1860s, situated within the Barrack Street area linked to Douglas's military presence. In its earliest years it likely served as a hall or support building for troops. Over time it took on other roles &mdash; a school linked to St George's, a community hall. These uses overlapped rather than replaced each other. From the start, it was a building that adapted to whatever the community needed.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:600px">
+      <p class="history-copy">The building appears on maps as early as the 1860s, situated within the Barrack Street area linked to Douglas's military presence. In its earliest years it likely served as a hall or support building for troops. Over time it took on other roles &mdash; a school linked to St George's, a community hall. These uses overlapped rather than replaced each other. From the start, it was a building that adapted to whatever the community needed.</p>
+      <div class="history-media">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/history-original-building.jpg" alt="The original Barrack Street building" style="width:100%;height:auto;display:block">
       </div>
-      <p style="font-family:var(--fc);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--subtle);margin-top:0.75rem">The original stone building on Barrack Street</p>
+      <p class="history-caption">The original stone building on Barrack Street</p>
     </div>
 
     <!-- ERA: MISSION HALL -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">Early 1900s &mdash; 1970s</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE MISSION<br>HALL ERA</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">For decades, the building was known as the Barrack Street Mission Hall. Religious services, Sunday school, community gatherings, meetings, Pleasant Sunday Afternoon events &mdash; the hall was the social hub of the area. Records from the 1910s reference "Barrack Street Club" with billiards and snooker tables. Pew seating from its church days lined the walls. It remained in active use well into the 1970s &mdash; a community space in the truest sense.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:600px">
+      <p class="history-copy">For decades, the building was known as the Barrack Street Mission Hall. Religious services, Sunday school, community gatherings, meetings, Pleasant Sunday Afternoon events &mdash; the hall was the social hub of the area. Records from the 1910s reference "Barrack Street Club" with billiards and snooker tables. Pew seating from its church days lined the walls. It remained in active use well into the 1970s &mdash; a community space in the truest sense.</p>
+      <div class="history-media">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/history-gentlemans-club.jpg" alt="Interior with billiards table, early 1900s" style="width:100%;height:auto;display:block">
       </div>
-      <p style="font-family:var(--fc);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--subtle);margin-top:0.75rem">The club interior &mdash; billiards table, piano, Union Jack bunting</p>
+      <p class="history-caption">The club interior &mdash; billiards table, piano, Union Jack bunting</p>
     </div>
     <!-- ERA: NIKKEI DOW -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">1983</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE<br>NIKKEI DOW</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">The building was converted into a bar and nightclub &mdash; its first step into the nightlife world. Known as The Nikkei Dow, it was linked to the Dow Jones venue up by the old prison. The vertical signage went up on Barrack Street, the interior was fitted out with a mezzanine bar, chequered floor tiles, and a proper staircase to the upper level. This was the moment Barrack Street became somewhere you went for a night out rather than a Sunday service. The Nikkei Dow didn't last, but it set the direction for everything that followed.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:600px">
+      <p class="history-copy">The building was converted into a bar and nightclub &mdash; its first step into the nightlife world. Known as The Nikkei Dow, it was linked to the Dow Jones venue up by the old prison. The vertical signage went up on Barrack Street, the interior was fitted out with a mezzanine bar, chequered floor tiles, and a proper staircase to the upper level. This was the moment Barrack Street became somewhere you went for a night out rather than a Sunday service. The Nikkei Dow didn't last, but it set the direction for everything that followed.</p>
+      <div class="history-media">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/history-nikkei-dow.jpg" alt="The Nikkei Dow, Barrack Street, 1983" style="width:100%;height:auto;display:block">
       </div>
-      <p style="font-family:var(--fc);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--subtle);margin-top:0.75rem">The Nikkei Dow &mdash; exterior with vertical signage and interior with mezzanine bar, 1983</p>
+      <p class="history-caption">The Nikkei Dow &mdash; exterior with vertical signage and interior with mezzanine bar, 1983</p>
     </div>
 
     <!-- ERA: THE TARDIS -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">1994</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE TARDIS</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">"The Late Club at the End of the Universe." Barrack Street, Douglas, 661547. The Tardis opened on Monday 18th July 1994. Free entry Mon&ndash;Thur, Â£2 on Fridays and Saturdays. "All your favourite tunes. Smart dress not advised." This was the moment the building became a dedicated nightclub &mdash; not just reused space, but a purpose-built nightlife identity.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:400px">
+      <p class="history-copy">"The Late Club at the End of the Universe." Barrack Street, Douglas, 661547. The Tardis opened on Monday 18th July 1994. Free entry Mon&ndash;Thur, Â£2 on Fridays and Saturdays. "All your favourite tunes. Smart dress not advised." This was the moment the building became a dedicated nightclub &mdash; not just reused space, but a purpose-built nightlife identity.</p>
+      <div class="history-media" style="max-width:min(100%,520px)">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/history-tardis-flyer.jpg" alt="The Tardis opening flyer, 1994" style="width:100%;height:auto;display:block">
       </div>
-      <p style="font-family:var(--fc);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--subtle);margin-top:0.75rem">Original opening flyer for The Tardis, 1994</p>
+      <p class="history-caption">Original opening flyer for The Tardis, 1994</p>
     </div>
 
     <!-- ERA: THE OUTBACK -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">Late 1990s</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">THE OUTBACK<br>IS BORN</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">Around 1998, The Tardis became The Outback. The Australian theme arrived &mdash; corrugated iron, VB signs, the kangaroo logo. What started as a sports bar evolved into a pub and nightclub hybrid with multiple zones, and it stuck. The building finally had an identity that would last.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:600px">
+      <p class="history-copy">Around 1998, The Tardis became The Outback. The Australian theme arrived &mdash; corrugated iron, VB signs, the kangaroo logo. What started as a sports bar evolved into a pub and nightclub hybrid with multiple zones, and it stuck. The building finally had an identity that would last.</p>
+      <div class="history-media">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/exterior-queue-the-outback.jpg" alt="Queue outside The Outback" style="width:100%;height:auto;display:block">
       </div>
     </div>
 
     <!-- ERA: 2025 -->
-    <div style="margin-bottom:clamp(3rem,6vw,5rem);position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--green)"></div>
+    <div class="sr history-era">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--green)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--green);margin-bottom:0.5rem">2020s</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">MODERNISATION</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">A full network rebuild, sound system redesign, and the installation of Void Acoustics systems across the venue. In 2025, the Middle Bar was completely renovated with a Monster Energy theme and an exclusive cocktail menu. The building that started as a troops' hall now runs on VLANs, professional-grade audio, and more Monster Energy than is probably advisable.</p>
-      <div style="overflow:hidden;border-radius:3px;max-width:600px">
+      <p class="history-copy">A full network rebuild, sound system redesign, and the installation of Void Acoustics systems across the venue. In 2025, the Middle Bar was completely renovated with a Monster Energy theme and an exclusive cocktail menu. The building that started as a troops' hall now runs on VLANs, professional-grade audio, and more Monster Energy than is probably advisable.</p>
+      <div class="history-media">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/middle-bar-monster-the-outback.jpg" alt="Middle Bar renovation 2025" style="width:100%;height:auto;display:block">
       </div>
     </div>
 
     <!-- ERA: TODAY -->
-    <div style="position:relative" class="sr">
-      <div style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
+    <div class="sr history-era" style="margin-bottom:0">
+      <div class="history-era-dot" style="position:absolute;left:calc(-1 * clamp(2rem,4vw,3.5rem) + -4px);top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange)"></div>
       <p style="font-family:var(--fc);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem">Today</p>
       <h2 style="font-family:var(--fd);font-size:clamp(32px,6vw,56px);letter-spacing:0.04em;color:var(--text);line-height:0.9;margin-bottom:1rem">STILL STANDING.<br>STILL GOING.</h2>
-      <p style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin-bottom:1.5rem">From a troops' hall to a mission hall. From The Nikkei Dow to The Tardis. From The Tardis to The Outback. The use changed, but the purpose never did &mdash; it's always been a place where people gather. Five spaces, three sound systems, one building that refuses to stop.</p>
+      <p class="history-copy">From a troops' hall to a mission hall. From The Nikkei Dow to The Tardis. From The Tardis to The Outback. The use changed, but the purpose never did &mdash; it's always been a place where people gather. Five spaces, three sound systems, one building that refuses to stop.</p>
       <a href="/spaces" class="btn-primary" style="margin-top:0.5rem">Explore the Venue</a>
     </div>
 
+  </div>
   </div>
 </section>
 
