@@ -882,3 +882,29 @@ body{animation:pageIn 0.4s ease forwards}
     text-align: center;
   }
 }
+
+  @media(max-width:900px){
+    .gallery-mosaic .video-cell video{
+      height:220px;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .sp-dancefloor-video video{
+      height:220px;
+      min-height:220px;
+      object-fit:cover;
+      object-position:center;
+    }
+  }
+
+  @media(max-width:600px){
+    .gallery-mosaic .video-cell video{
+      height:180px;
+    }
+
+    .sp-dancefloor-video video{
+      height:190px;
+      min-height:190px;
+    }
+  }
