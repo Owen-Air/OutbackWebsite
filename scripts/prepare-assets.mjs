@@ -35,10 +35,5 @@ for (const entry of rootEntries) {
   cpSync(path.join(repoRoot, entry), path.join(publicDir, entry), { recursive: true });
 }
 
-const imagesSource = path.join(repoRoot, "images");
-if (existsSync(imagesSource)) {
-  cpSync(imagesSource, path.join(publicDir, "images"), { recursive: true });
-}
-
 const copied = readdirSync(publicDir);
 console.log(`Prepared public assets in ${publicDir} with ${copied.length} top-level entries.`);
