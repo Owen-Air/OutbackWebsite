@@ -24,13 +24,16 @@ function walk(dir) {
 
 const files = walk(imagesRoot);
 
+
 for (const filePath of files) {
   const key = path.relative(imagesRoot, filePath).replace(/\\/g, "/");
-  const command = `"C:\\Program Files\\nodejs\\npx.cmd" wrangler r2 object put "${bucket}/${key}" --file "${filePath}" --remote -y`;
+  // Use PowerShell npx.ps1 path for this environment
+  const npxPath = 'C:/Program Files/nodejs/npx.ps1';
+  const command = `& \"${npxPath}\" wrangler r2 object put \"${bucket}/${key}\" --file \"${filePath}\" --remote -y`;
   const result = spawnSync(
-    "C:\\Windows\\System32\\cmd.exe",
-    ["/d", "/s", "/c", command],
-    { stdio: "inherit", shell: false, env: process.env }
+    'powershell.exe',
+    ['-NoProfile', '-Command', command],
+    { stdio: 'inherit', shell: false, env: process.env }
   );
 
   if (result.status !== 0) {
