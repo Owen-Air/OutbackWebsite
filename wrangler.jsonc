@@ -15,4 +15,11 @@
   "compatibility_flags": [
     "nodejs_compat"
   ]
+  ,
+  "routes": [
+    {
+      "pattern": "theoutback.im/*",
+      "script": "outback-website-alpha"
+    }
+  ]
 }
