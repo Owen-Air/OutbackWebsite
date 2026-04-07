@@ -17,9 +17,6 @@
   ]
   ,
   "routes": [
-    {
-      "pattern": "theoutback.im/*",
-      "script": "outback-website-alpha"
-    }
+    { "pattern": "theoutback.im/*" }
   ]
 }
