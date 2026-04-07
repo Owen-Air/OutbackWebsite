@@ -17,6 +17,6 @@
   ]
   ,
   "routes": [
-    { "pattern": "theoutback.im/*" }
+    "theoutback.im/*"
   ]
 }
