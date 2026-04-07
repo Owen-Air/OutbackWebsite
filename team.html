@@ -21,6 +21,10 @@
 .team-card{background:var(--deep);overflow:hidden;transition:background 0.2s}
 .team-card:hover{background:var(--panel)}
 .team-photo{overflow:hidden;position:relative;background:var(--surface);max-height:400px}
+.team-photo.tyler-finn{max-height:520px;}
+@media(max-width:600px){
+  .team-photo.tyler-finn{max-height:320px;}
+}
 .team-photo img{width:100%;height:auto;object-fit:contain;display:block;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
 .team-card:hover .team-photo img{transform:scale(1.03)}
 .team-photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--surface)}
@@ -215,7 +219,7 @@
 
     <!-- TYLER & FINN -->
     <div class="team-card">
-      <div class="team-photo" style="max-height:520px;">
+      <div class="team-photo tyler-finn">
         <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/8abcf7e4-35b0-4058-b2ca-c495350d9ffe.jpg" alt="Tyler and Finn" style="max-width:100%;height:auto;">
       </div>
       <div class="team-info">
