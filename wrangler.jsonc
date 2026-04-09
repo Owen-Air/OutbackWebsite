@@ -16,6 +16,12 @@
     "nodejs_compat"
   ]
   ,
+  "kv_namespaces": [
+    {
+      "binding": "RATE_LIMIT",
+      "id": "bffa2f8dc14347968c0e046fab1b8469"
+    }
+  ],
   "routes": [
     "theoutback.im/*"
   ]
