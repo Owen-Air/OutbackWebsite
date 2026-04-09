@@ -1,15 +1,23 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "the-outback-website",
-  "pages_build_output_dir": "./public",
+  "name": "outback-website-alpha",
   "compatibility_date": "2026-04-09",
   "observability": {
     "enabled": true
+  },
+  "build": {
+    "command": "node ./scripts/prepare-assets.mjs"
+  },
+  "assets": {
+    "directory": "./public"
   },
   "kv_namespaces": [
     {
       "binding": "RATE_LIMIT",
       "id": "bffa2f8dc14347968c0e046fab1b8469"
     }
+  ],
+  "routes": [
+    "theoutback.im/*"
   ]
 }
