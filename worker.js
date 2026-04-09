@@ -202,29 +202,31 @@ async function handleValidate(request, env) {
   }
   return jsonResponse({ success: true, message: 'Validation passed.' }, 200);
 }
-module.exports.fetch = async function(request, env) {
-  const url = new URL(request.url);
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
 
-  if (url.pathname === '/api/contact' && request.method === 'POST') {
-    // Deprecated: now only used for reference/testing
-    return handleContact(request, env);
-  }
+    if (url.pathname === '/api/contact' && request.method === 'POST') {
+      // Deprecated: now only used for reference/testing
+      return handleContact(request, env);
+    }
 
-  if (url.pathname === '/api/validate' && request.method === 'POST') {
-    return handleValidate(request, env);
-  }
+    if (url.pathname === '/api/validate' && request.method === 'POST') {
+      return handleValidate(request, env);
+    }
 
-  // Serve PNG favicon as .ico if requested
-  if (url.pathname === '/favicon.ico') {
-    return fetch('https://theoutback.im/favicon48x48.png', {
-      headers: { 'content-type': 'image/png' }
-    });
-  }
+    // Serve PNG favicon as .ico if requested
+    if (url.pathname === '/favicon.ico') {
+      return fetch('https://theoutback.im/favicon48x48.png', {
+        headers: { 'content-type': 'image/png' }
+      });
+    }
 
-  if (env && env.ASSETS && env.ASSETS.fetch) {
-    return env.ASSETS.fetch(request);
-  }
+    if (env && env.ASSETS && env.ASSETS.fetch) {
+      return env.ASSETS.fetch(request);
+    }
 
-  return fetch(request);
+    return fetch(request);
+  },
 };
 

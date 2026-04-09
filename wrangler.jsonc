@@ -12,9 +12,9 @@
   "assets": {
     "directory": "./public"
   },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  // "compatibility_flags": [
+  //   "nodejs_compat"
+  // ]
   ,
   "kv_namespaces": [
     {
