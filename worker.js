@@ -202,8 +202,6 @@ async function handleValidate(request, env) {
   }
   return jsonResponse({ success: true, message: 'Validation passed.' }, 200);
 }
-}
-
 module.exports = {
   async fetch(request, env) {
     const url = new URL(request.url);
