@@ -44,6 +44,26 @@ function buildDetails(payload) {
   };
 }
 
+async function readEmailFromRequest(request) {
+  const contentType = request.headers.get('content-type') || '';
+
+  if (contentType.includes('application/json')) {
+    const payload = await request.json();
+    return typeof payload?.email === 'string' ? payload.email.trim() : '';
+  }
+
+  if (
+    contentType.includes('multipart/form-data') ||
+    contentType.includes('application/x-www-form-urlencoded')
+  ) {
+    const formData = await request.formData();
+    const email = formData.get('email');
+    return typeof email === 'string' ? email.trim() : '';
+  }
+
+  throw new Error('unsupported_content_type');
+}
+
 async function handleValidate(request, env) {
   if (request.method !== 'POST') {
     return json(
@@ -75,10 +95,10 @@ async function handleValidate(request, env) {
     );
   }
 
-  let payload;
+  let email;
 
   try {
-    payload = await request.json();
+    email = await readEmailFromRequest(request);
   } catch {
     return json(
       {
@@ -86,14 +106,12 @@ async function handleValidate(request, env) {
         reason: 'invalid_json',
         mailboxvalidator_score: null,
         details: {
-          message: 'Request body must be valid JSON.'
+          message: 'Request body must include an email address.'
         }
       },
       400
     );
   }
-
-  const email = typeof payload?.email === 'string' ? payload.email.trim() : '';
 
   if (!email) {
     return json(
