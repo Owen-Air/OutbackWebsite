@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const EMAIL_VALIDATION_MESSAGES = {
     missing_email: 'Enter an email address before sending your enquiry.',
+    missing_turnstile: 'Please complete the captcha before sending your enquiry.',
     invalid_json: 'The validation request was invalid. Please try again.',
     invalid_syntax: 'That email address does not look valid.',
+    turnstile_failed: 'Captcha verification failed. Please try again.',
     validation_service_unavailable: 'Email validation is temporarily unavailable. Please call us directly.',
     validation_service_error: 'We could not validate that email address just now. Please try again.',
     rejected: 'Please use a real, non-disposable email address so we can reply.'
@@ -18,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form = document.querySelector('.contact-form');
   if (!form) return;
+
+  const getTurnstileToken = () => {
+    const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
+    return typeof tokenInput?.value === 'string' ? tokenInput.value.trim() : '';
+  };
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -72,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          email: form.email.value.trim()
+          email: form.email.value.trim(),
+          turnstileToken: getTurnstileToken()
         })
       });
 
@@ -110,6 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (w3fData.success) {
         form.reset();
+        if (window.turnstile && typeof window.turnstile.reset === 'function') {
+          window.turnstile.reset();
+        }
         localStorage.setItem('contactFormLastSubmit', Date.now().toString());
         submitButton.textContent = 'SENT ✓';
         submitButton.style.background = '#95D600';
@@ -120,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       throw new Error(w3fData.message || 'Form service returned an error.');
     } catch (error) {
+      if (window.turnstile && typeof window.turnstile.reset === 'function') {
+        window.turnstile.reset();
+      }
       submitButton.textContent = 'ERROR — TRY AGAIN';
       submitButton.style.background = '#cc3333';
       submitButton.style.opacity = '1';

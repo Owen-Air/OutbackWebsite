@@ -1,4 +1,5 @@
 const MAILBOXVALIDATOR_ENDPOINT = 'https://api.mailboxvalidator.com/v2/validation/single';
+const TURNSTILE_VERIFY_ENDPOINT = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const EMAIL_SYNTAX_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function json(data, status = 200) {
@@ -64,6 +65,68 @@ async function readEmailFromRequest(request) {
   throw new Error('unsupported_content_type');
 }
 
+async function readValidationPayload(request) {
+  const contentType = request.headers.get('content-type') || '';
+
+  if (contentType.includes('application/json')) {
+    const payload = await request.json();
+    return {
+      email: typeof payload?.email === 'string' ? payload.email.trim() : '',
+      turnstileToken: typeof payload?.turnstileToken === 'string' ? payload.turnstileToken.trim() : ''
+    };
+  }
+
+  if (
+    contentType.includes('multipart/form-data') ||
+    contentType.includes('application/x-www-form-urlencoded')
+  ) {
+    const formData = await request.formData();
+    const email = formData.get('email');
+    const turnstileToken = formData.get('cf-turnstile-response') || formData.get('turnstileToken');
+    return {
+      email: typeof email === 'string' ? email.trim() : '',
+      turnstileToken: typeof turnstileToken === 'string' ? turnstileToken.trim() : ''
+    };
+  }
+
+  throw new Error('unsupported_content_type');
+}
+
+async function verifyTurnstileToken(request, env, token) {
+  if (!env.TURNSTILE_SECRET) {
+    return { ok: true, skipped: true };
+  }
+
+  if (!token) {
+    return { ok: false, reason: 'missing_turnstile' };
+  }
+
+  try {
+    const formData = new FormData();
+    formData.set('secret', env.TURNSTILE_SECRET);
+    formData.set('response', token);
+
+    const clientIp = request.headers.get('cf-connecting-ip');
+    if (clientIp) {
+      formData.set('remoteip', clientIp);
+    }
+
+    const response = await fetch(TURNSTILE_VERIFY_ENDPOINT, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      return { ok: false, reason: 'turnstile_failed' };
+    }
+
+    const payload = await response.json();
+    return payload?.success ? { ok: true } : { ok: false, reason: 'turnstile_failed' };
+  } catch {
+    return { ok: false, reason: 'turnstile_failed' };
+  }
+}
+
 async function handleValidate(request, env) {
   if (request.method !== 'POST') {
     return json(
@@ -95,10 +158,10 @@ async function handleValidate(request, env) {
     );
   }
 
-  let email;
+  let validationPayload;
 
   try {
-    email = await readEmailFromRequest(request);
+    validationPayload = await readValidationPayload(request);
   } catch {
     return json(
       {
@@ -107,6 +170,23 @@ async function handleValidate(request, env) {
         mailboxvalidator_score: null,
         details: {
           message: 'Request body must include an email address.'
+        }
+      },
+      400
+    );
+  }
+
+  const { email, turnstileToken } = validationPayload;
+
+  const turnstileResult = await verifyTurnstileToken(request, env, turnstileToken);
+  if (!turnstileResult.ok) {
+    return json(
+      {
+        valid: false,
+        reason: turnstileResult.reason,
+        mailboxvalidator_score: null,
+        details: {
+          message: 'Captcha verification failed.'
         }
       },
       400
@@ -198,7 +278,10 @@ async function handleValidate(request, env) {
     valid: validationPassed,
     reason: validationPassed ? 'accepted' : 'rejected',
     mailboxvalidator_score: mailboxvalidatorPayload?.score ?? null,
-    details
+    details: {
+      ...details,
+      turnstile: turnstileResult.skipped ? 'not-configured' : 'verified'
+    }
   });
 }
 
