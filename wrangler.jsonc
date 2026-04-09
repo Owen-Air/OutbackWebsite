@@ -1,7 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "outback-website-alpha",
-  "main": "./worker.js",
+    "theoutback.im/*"
+  ]
+  
   "compatibility_date": "2026-04-02",
   "observability": {
     "enabled": true
