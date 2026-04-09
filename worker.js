@@ -17,6 +17,16 @@ function jsonResponse(body, status = 200) {
   });
 }
 
+async function fetchWithTimeout(resource, options = {}, timeoutMs = 3000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(resource, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 const INPUT_LIMITS = { name: 100, email: 254, phone: 30, enquiry: 50, date: 10, message: 2000 };
 const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_WINDOW = 15 * 60; // 15 minutes in seconds
@@ -72,7 +82,11 @@ async function handleContact(request, env) {
     tsBody.append('secret', env.TURNSTILE_SECRET);
     tsBody.append('response', token);
     tsBody.append('remoteip', ip);
-    const tsRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: tsBody });
+    const tsRes = await fetchWithTimeout(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      { method: 'POST', body: tsBody },
+      3000
+    );
     const tsJson = await tsRes.json();
     if (!tsJson.success) {
       return jsonResponse({ success: false, message: 'Bot check failed. Please try again.' }, 403);
@@ -81,8 +95,10 @@ async function handleContact(request, env) {
 
   // 6. Email validation via MailboxValidator
   try {
-    const mbvRes = await fetch(
-      `https://api.mailboxvalidator.com/v2/validation/single?key=${env.MAILBOXVALIDATOR_KEY}&email=${encodeURIComponent(email)}&format=json`
+    const mbvRes = await fetchWithTimeout(
+      `https://api.mailboxvalidator.com/v2/validation/single?key=${env.MAILBOXVALIDATOR_KEY}&email=${encodeURIComponent(email)}&format=json`,
+      {},
+      1500
     );
     const mbv = await mbvRes.json();
     if (!mbv.error) {
