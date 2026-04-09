@@ -28,8 +28,8 @@ async function fetchWithTimeout(resource, options = {}, timeoutMs = 3000) {
 }
 
 const INPUT_LIMITS = { name: 100, email: 254, phone: 30, enquiry: 50, date: 10, message: 2000 };
-const RATE_LIMIT_MAX = 3;
-const RATE_LIMIT_WINDOW = 15 * 60; // 15 minutes in seconds
+const RATE_LIMIT_MAX = 100;
+const RATE_LIMIT_WINDOW = 60; // 1 minute in seconds
 
 async function handleContact(request, env) {
   // 1. Origin / Referer check — block requests not originating from the site
