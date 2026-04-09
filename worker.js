@@ -205,10 +205,9 @@ async function handleValidate(request, env) {
 }
 }
 
-export default {
+module.exports = {
   async fetch(request, env) {
     const url = new URL(request.url);
-
 
     if (url.pathname === '/api/contact' && request.method === 'POST') {
       // Deprecated: now only used for reference/testing
