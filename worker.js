@@ -15,7 +15,7 @@ function jsonResponse(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json' },
   });
-}
+
 
 async function fetchWithTimeout(resource, options = {}, timeoutMs = 3000) {
   const controller = new AbortController();
