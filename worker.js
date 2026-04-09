@@ -141,15 +141,20 @@ async function handleContact(request, env) {
   }
 
   // 7. Forward to web3forms
-  const w3fData = new FormData();
+  // Prepare data as JSON for Web3Forms
+  const formObject = {};
   for (const [key, value] of formData.entries()) {
-    w3fData.append(key, value);
+    formObject[key] = value;
   }
-  w3fData.set('access_key', env.WEB3FORMS_KEY);
+  formObject.access_key = env.WEB3FORMS_KEY || "576014a8-99fd-42c1-84e2-826a31705d39";
 
   const w3fRes = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
-    body: w3fData,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(formObject),
   });
 
   const w3fContentType = w3fRes.headers.get('content-type') || '';
