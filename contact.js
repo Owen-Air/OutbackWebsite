@@ -55,18 +55,45 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const response = await fetch(form.action, {
+      // Step 1: Validate email server-side
+      const validateFormData = new FormData();
+      validateFormData.append('email', form.email.value);
+      const validateRes = await fetch('/api/validate', {
         method: 'POST',
-        body: new FormData(form)
+        body: validateFormData
       });
-      let data;
+      let validateData;
       try {
-        data = await response.json();
+        validateData = await validateRes.json();
       } catch {
-        throw new Error(`Server error (HTTP ${response.status}). Please try again or call us directly.`);
+        throw new Error(`Validation error (HTTP ${validateRes.status}). Please try again or call us directly.`);
+      }
+      if (!validateData.success) {
+        throw new Error(validateData.message || 'Email validation failed.');
       }
 
-      if (data.success) {
+      // Step 2: Submit to Web3Forms
+      const web3formsData = {};
+      new FormData(form).forEach((value, key) => {
+        web3formsData[key] = value;
+      });
+      web3formsData.access_key = '576014a8-99fd-42c1-84e2-826a31705d39';
+
+      const w3fRes = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(web3formsData)
+      });
+      let w3fData;
+      try {
+        w3fData = await w3fRes.json();
+      } catch {
+        throw new Error(`Web3Forms error (HTTP ${w3fRes.status}). Please try again or call us directly.`);
+      }
+      if (w3fData.success) {
         form.reset();
         localStorage.setItem('contactFormLastSubmit', Date.now().toString());
         submitButton.textContent = 'SENT ✓';
@@ -76,8 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.setTimeout(resetButton, 3000);
         return;
       }
-
-      throw new Error(data.message || 'Form service returned an error.');
+      throw new Error(w3fData.message || 'Form service returned an error.');
     } catch (error) {
       submitButton.textContent = 'ERROR — TRY AGAIN';
       submitButton.style.background = '#cc3333';
