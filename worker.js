@@ -93,7 +93,7 @@ async function handleContact(request, env) {
     }
   }
 
-  // 6. Email validation via MailboxValidator
+  // 6. Email validation via MailboxValidator (robust to non-JSON and error responses)
   try {
     const mbvRes = await fetchWithTimeout(
       `https://api.mailboxvalidator.com/v2/validation/single?key=${env.MAILBOXVALIDATOR_KEY}&email=${encodeURIComponent(email)}&format=json`,
@@ -102,15 +102,25 @@ async function handleContact(request, env) {
     );
     const contentType = mbvRes.headers.get('content-type') || '';
     let mbv = {};
+    let mbvText = '';
     if (contentType.includes('application/json')) {
-      mbv = await mbvRes.json();
+      try {
+        mbv = await mbvRes.json();
+      } catch (e) {
+        mbvText = await mbvRes.text();
+        console.error('MailboxValidator invalid JSON:', mbvText);
+        mbv = {};
+      }
     } else {
-      const text = await mbvRes.text();
-      console.error('MailboxValidator non-JSON response:', text);
-      // Fail open
+      mbvText = await mbvRes.text();
+      console.error('MailboxValidator non-JSON response:', mbvText);
       mbv = {};
     }
-    if (!mbv.error) {
+    // If MailboxValidator returns an error object, handle gracefully
+    if (mbv.error) {
+      console.error('MailboxValidator API error:', mbv.error.error_code, mbv.error.error_message);
+      // Fail open: do not block submission
+    } else {
       if (mbv.is_syntax === false) {
         return jsonResponse({ success: false, message: "That email address doesn't look right. Please check and try again." }, 422);
       }
