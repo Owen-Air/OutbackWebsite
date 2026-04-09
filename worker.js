@@ -140,47 +140,83 @@ async function handleContact(request, env) {
     console.error('MailboxValidator error:', err);
   }
 
-  // 7. Forward to web3forms
-  // Prepare data as JSON for Web3Forms
-  const formObject = {};
-  for (const [key, value] of formData.entries()) {
-    formObject[key] = value;
+  // Instead of forwarding to Web3Forms, just return success
+  return jsonResponse({ success: true, message: 'Validation passed.' }, 200);
+}
+
+// New endpoint: /api/validate for email validation only
+async function handleValidate(request, env) {
+  // Only allow POST
+  if (request.method !== 'POST') {
+    return jsonResponse({ success: false, message: 'Method not allowed.' }, 405);
   }
-  formObject.access_key = env.WEB3FORMS_KEY || "576014a8-99fd-42c1-84e2-826a31705d39";
-
-  const w3fRes = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(formObject),
-  });
-
-  const w3fContentType = w3fRes.headers.get('content-type') || '';
-  let result = {};
-  if (w3fContentType.includes('application/json')) {
-    try {
-      result = await w3fRes.json();
-    } catch (e) {
-      const text = await w3fRes.text();
-      console.error('Web3Forms invalid JSON:', text);
-      result = { success: false, message: 'Unexpected response from Web3Forms.' };
+  // Parse form data
+  let formData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return jsonResponse({ success: false, message: 'Invalid form data.' }, 400);
+  }
+  const email = formData.get('email');
+  if (!email) {
+    return jsonResponse({ success: false, message: 'Email address is required.' }, 400);
+  }
+  // Email validation via MailboxValidator
+  try {
+    const mbvRes = await fetchWithTimeout(
+      `https://api.mailboxvalidator.com/v2/validation/single?key=${env.MAILBOXVALIDATOR_KEY}&email=${encodeURIComponent(email)}&format=json`,
+      {},
+      1500
+    );
+    const contentType = mbvRes.headers.get('content-type') || '';
+    let mbv = {};
+    let mbvText = '';
+    if (contentType.includes('application/json')) {
+      try {
+        mbv = await mbvRes.json();
+      } catch (e) {
+        mbvText = await mbvRes.text();
+        console.error('MailboxValidator invalid JSON:', mbvText);
+        mbv = {};
+      }
+    } else {
+      mbvText = await mbvRes.text();
+      console.error('MailboxValidator non-JSON response:', mbvText);
+      mbv = {};
     }
-  } else {
-    const text = await w3fRes.text();
-    console.error('Web3Forms non-JSON response:', text);
-    result = { success: false, message: 'Unexpected response from Web3Forms.' };
+    if (mbv.error) {
+      console.error('MailboxValidator API error:', mbv.error.error_code, mbv.error.error_message);
+      // Fail open: do not block submission
+    } else {
+      if (mbv.is_syntax === false) {
+        return jsonResponse({ success: false, message: "That email address doesn't look right. Please check and try again." }, 422);
+      }
+      if (mbv.is_disposable === true) {
+        return jsonResponse({ success: false, message: "Please use a real email address — we can't accept disposable or temporary emails." }, 422);
+      }
+      if (mbv.is_suppressed === true || mbv.status === false) {
+        return jsonResponse({ success: false, message: "That email address couldn't be validated. Please use a different one." }, 422);
+      }
+    }
+  } catch (err) {
+    console.error('MailboxValidator error:', err);
   }
-  return jsonResponse(result, w3fRes.status);
+  return jsonResponse({ success: true, message: 'Validation passed.' }, 200);
+}
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+
     if (url.pathname === '/api/contact' && request.method === 'POST') {
+      // Deprecated: now only used for reference/testing
       return handleContact(request, env);
+    }
+
+    if (url.pathname === '/api/validate' && request.method === 'POST') {
+      return handleValidate(request, env);
     }
 
     // Serve PNG favicon as .ico if requested
