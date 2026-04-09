@@ -33,10 +33,14 @@ const RATE_LIMIT_WINDOW = 60; // 1 minute in seconds
 
 async function handleContact(request, env) {
   // 1. Origin / Referer check — block requests not originating from the site
-  const origin = request.headers.get('origin') ?? '';
-  const referer = request.headers.get('referer') ?? '';
+  const origin = (request.headers.get('origin') ?? '').toLowerCase().replace(/\/$/, '');
+  const referer = (request.headers.get('referer') ?? '').toLowerCase().replace(/\/$/, '');
   const allowed = ['https://theoutback.im', 'https://www.theoutback.im'];
-  if (!allowed.some(a => origin.startsWith(a) || referer.startsWith(a))) {
+  const allowedSet = new Set(allowed.map(a => a.toLowerCase()));
+  const originOk = allowedSet.has(origin);
+  const refererOk = allowedSet.has(referer.split(/[?#]/)[0]);
+  if (!originOk && !refererOk) {
+    console.error('Forbidden: origin/referer check failed', { origin, referer });
     return jsonResponse({ success: false, message: 'Forbidden.' }, 403);
   }
 
