@@ -148,7 +148,21 @@ async function handleContact(request, env) {
     body: w3fData,
   });
 
-  const result = await w3fRes.json();
+  const w3fContentType = w3fRes.headers.get('content-type') || '';
+  let result = {};
+  if (w3fContentType.includes('application/json')) {
+    try {
+      result = await w3fRes.json();
+    } catch (e) {
+      const text = await w3fRes.text();
+      console.error('Web3Forms invalid JSON:', text);
+      result = { success: false, message: 'Unexpected response from Web3Forms.' };
+    }
+  } else {
+    const text = await w3fRes.text();
+    console.error('Web3Forms non-JSON response:', text);
+    result = { success: false, message: 'Unexpected response from Web3Forms.' };
+  }
   return jsonResponse(result, w3fRes.status);
 }
 
