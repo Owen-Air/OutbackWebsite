@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Step 2: Submit to Web3Forms
       const web3formsData = new FormData(form);
+      web3formsData.delete('cf-turnstile-response');
 
       const w3fRes = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
