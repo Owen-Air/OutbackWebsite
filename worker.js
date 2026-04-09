@@ -25,7 +25,7 @@ async function fetchWithTimeout(resource, options = {}, timeoutMs = 3000) {
   } finally {
     clearTimeout(timer);
   }
-}
+
 
 const INPUT_LIMITS = { name: 100, email: 254, phone: 30, enquiry: 50, date: 10, message: 2000 };
 const RATE_LIMIT_MAX = 100;
