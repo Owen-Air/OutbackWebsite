@@ -100,7 +100,16 @@ async function handleContact(request, env) {
       {},
       1500
     );
-    const mbv = await mbvRes.json();
+    const contentType = mbvRes.headers.get('content-type') || '';
+    let mbv = {};
+    if (contentType.includes('application/json')) {
+      mbv = await mbvRes.json();
+    } else {
+      const text = await mbvRes.text();
+      console.error('MailboxValidator non-JSON response:', text);
+      // Fail open
+      mbv = {};
+    }
     if (!mbv.error) {
       if (mbv.is_syntax === false) {
         return jsonResponse({ success: false, message: "That email address doesn't look right. Please check and try again." }, 422);
