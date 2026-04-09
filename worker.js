@@ -174,6 +174,13 @@ export default {
       return handleContact(request, env);
     }
 
+    // Serve PNG favicon as .ico if requested
+    if (url.pathname === '/favicon.ico') {
+      return fetch('https://theoutback.im/favicon48x48.png', {
+        headers: { 'content-type': 'image/png' }
+      });
+    }
+
     if (env && env.ASSETS && env.ASSETS.fetch) {
       return env.ASSETS.fetch(request);
     }
