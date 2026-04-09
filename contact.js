@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const EMAIL_VALIDATION_MESSAGES = {
+    missing_email: 'Enter an email address before sending your enquiry.',
+    invalid_json: 'The validation request was invalid. Please try again.',
+    invalid_syntax: 'That email address does not look valid.',
+    validation_service_unavailable: 'Email validation is temporarily unavailable. Please call us directly.',
+    validation_service_error: 'We could not validate that email address just now. Please try again.',
+    rejected: 'Please use a real, non-disposable email address so we can reply.'
+  };
+
   const emailLink = document.getElementById('emailLink');
   if (emailLink) {
     const user = 'outbackiom';
@@ -56,37 +65,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Step 1: Validate email server-side
-      const validateFormData = new FormData();
-      validateFormData.append('email', form.email.value);
       const validateRes = await fetch('/api/validate', {
         method: 'POST',
-        body: validateFormData
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: form.email.value.trim()
+        })
       });
+
       let validateData;
       try {
         validateData = await validateRes.json();
       } catch {
         throw new Error(`Validation error (HTTP ${validateRes.status}). Please try again or call us directly.`);
       }
-      if (!validateData.success) {
-        throw new Error(validateData.message || 'Email validation failed.');
+
+      if (!validateRes.ok || !validateData.valid) {
+        throw new Error(
+          EMAIL_VALIDATION_MESSAGES[validateData.reason] ||
+          validateData.details?.message ||
+          'Email validation failed.'
+        );
       }
 
       // Step 2: Submit to Web3Forms
-      const web3formsData = {};
-      new FormData(form).forEach((value, key) => {
-        web3formsData[key] = value;
-      });
-      web3formsData.access_key = '576014a8-99fd-42c1-84e2-826a31705d39';
+      const web3formsData = new FormData(form);
 
       const w3fRes = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(web3formsData)
+        body: web3formsData
       });
+
       let w3fData;
       try {
         w3fData = await w3fRes.json();
