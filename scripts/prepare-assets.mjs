@@ -12,6 +12,7 @@ const rootEntries = [
   "contact.html",
   "contact.js",
   "events.html",
+  "favicon48x48.png",
   "find-us.html",
   "history.html",
   "index.html",
