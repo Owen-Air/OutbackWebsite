@@ -300,6 +300,18 @@ export default {
       });
     }
 
+    if (
+      url.pathname === '/.well-known/traffic-advice' &&
+      (request.method === 'GET' || request.method === 'HEAD')
+    ) {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Cache-Control': 'public, max-age=3600'
+        }
+      });
+    }
+
     if (env && env.ASSETS && env.ASSETS.fetch) {
       return env.ASSETS.fetch(request);
     }
