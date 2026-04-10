@@ -1,6 +1,7 @@
 const MAILBOXVALIDATOR_ENDPOINT = 'https://api.mailboxvalidator.com/v2/validation/single';
 const TURNSTILE_VERIFY_ENDPOINT = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const EMAIL_SYNTAX_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const RATE_LIMIT_PREFIX = 'rl:v1';
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -43,6 +44,40 @@ function buildDetails(payload) {
     error_code: payload?.error_code ?? null,
     error_message: payload?.error_message ?? null
   };
+}
+
+function sanitizeRateKeyPart(value) {
+  return String(value || 'unknown')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9@._:-]/g, '_')
+    .slice(0, 120);
+}
+
+async function consumeRateLimit(env, bucket, subject, limit, windowSeconds) {
+  if (!env || !env.RATE_LIMIT) {
+    return { ok: true };
+  }
+
+  const key = `${RATE_LIMIT_PREFIX}:${bucket}:${sanitizeRateKeyPart(subject)}`;
+  let count = 0;
+
+  try {
+    const existing = await env.RATE_LIMIT.get(key);
+    count = Number.parseInt(existing || '0', 10);
+    if (!Number.isFinite(count) || count < 0) {
+      count = 0;
+    }
+  } catch {
+    return { ok: true };
+  }
+
+  if (count >= limit) {
+    return { ok: false, retryAfter: windowSeconds };
+  }
+
+  await env.RATE_LIMIT.put(key, String(count + 1), { expirationTtl: windowSeconds });
+  return { ok: true };
 }
 
 async function readEmailFromRequest(request) {
@@ -177,6 +212,54 @@ async function handleValidate(request, env) {
   }
 
   const { email, turnstileToken } = validationPayload;
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
+
+  const ipBurstLimit = await consumeRateLimit(env, 'validate-ip-1m', clientIp, 12, 60);
+  if (!ipBurstLimit.ok) {
+    return json(
+      {
+        valid: false,
+        reason: 'rate_limited',
+        mailboxvalidator_score: null,
+        details: {
+          message: 'Too many requests. Please wait a moment before trying again.'
+        }
+      },
+      429
+    );
+  }
+
+  const ipHourlyLimit = await consumeRateLimit(env, 'validate-ip-1h', clientIp, 180, 3600);
+  if (!ipHourlyLimit.ok) {
+    return json(
+      {
+        valid: false,
+        reason: 'rate_limited',
+        mailboxvalidator_score: null,
+        details: {
+          message: 'Too many requests from this network. Please try again later.'
+        }
+      },
+      429
+    );
+  }
+
+  if (email) {
+    const emailLimit = await consumeRateLimit(env, 'validate-email-10m', email, 10, 600);
+    if (!emailLimit.ok) {
+      return json(
+        {
+          valid: false,
+          reason: 'rate_limited',
+          mailboxvalidator_score: null,
+          details: {
+            message: 'That email has been checked too often. Please try again shortly.'
+          }
+        },
+        429
+      );
+    }
+  }
 
   const turnstileResult = await verifyTurnstileToken(request, env, turnstileToken);
   if (!turnstileResult.ok) {
@@ -285,12 +368,44 @@ async function handleValidate(request, env) {
   });
 }
 
+async function handleClientError(request, env) {
+  if (request.method !== 'POST') {
+    return new Response(null, { status: 204 });
+  }
+
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
+  const limit = await consumeRateLimit(env, 'client-error-ip-1m', clientIp, 60, 60);
+  if (!limit.ok) {
+    return new Response(null, { status: 202 });
+  }
+
+  try {
+    const payload = await request.json();
+    console.error('client-error', {
+      ip: clientIp,
+      type: payload?.type || 'unknown',
+      href: payload?.href || '',
+      message: payload?.payload?.message || ''
+    });
+  } catch {
+    // Ignore malformed client logging payloads.
+  }
+
+  return new Response(null, { status: 204 });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const wantsHtml = (request.headers.get('accept') || '').includes('text/html');
+    const hasAssetsBinding = !!(env && env.ASSETS && env.ASSETS.fetch);
 
     if (url.pathname === '/api/validate') {
       return handleValidate(request, env);
+    }
+
+    if (url.pathname === '/api/client-error') {
+      return handleClientError(request, env);
     }
 
     // Redirect .ico requests to the packaged PNG favicon asset.
@@ -310,8 +425,115 @@ export default {
       });
     }
 
-    if (env && env.ASSETS && env.ASSETS.fetch) {
-      return env.ASSETS.fetch(request);
+    if (
+      url.pathname === '/.well-known/security.txt' &&
+      (request.method === 'GET' || request.method === 'HEAD')
+    ) {
+      const securityTxt = [
+        'Contact: mailto:outbackiom@gmail.com',
+        'Expires: 2027-04-10T00:00:00.000Z',
+        'Preferred-Languages: en',
+        'Canonical: https://theoutback.im/.well-known/security.txt'
+      ].join('\n');
+
+      return new Response(request.method === 'HEAD' ? null : securityTxt, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/plain; charset=UTF-8',
+          'Cache-Control': 'public, max-age=3600'
+        }
+      });
+    }
+
+    const legalRouteTargets = {
+      '/privacy': '/privacy.html',
+      '/cookie-policy': '/cookie-policy.html',
+      '/terms': '/terms.html'
+    };
+    const legalTarget = legalRouteTargets[url.pathname];
+
+    if (!hasAssetsBinding) {
+      if (legalTarget) {
+        const rewritten = new Request(new URL(legalTarget, url.origin).toString(), request);
+        return fetch(rewritten);
+      }
+
+      if (url.pathname === '/404.html') {
+        const origin404 = await fetch(request);
+        const html = await origin404.text();
+        return new Response(html, {
+          status: 404,
+          headers: {
+            'content-type': 'text/html; charset=UTF-8',
+            'cache-control': 'public, max-age=3600, must-revalidate'
+          }
+        });
+      }
+
+      const isGetOrHead = request.method === 'GET' || request.method === 'HEAD';
+      const hasFileExtension = /\/[^/]+\.[a-z0-9]+$/i.test(url.pathname);
+      const knownRoutes = new Set([
+        '/',
+        '/spaces',
+        '/events',
+        '/menu',
+        '/team',
+        '/history',
+        '/find-us',
+        '/contact',
+        '/privacy',
+        '/cookie-policy',
+        '/terms',
+        '/thankyou.html',
+        '/robots.txt',
+        '/sitemap.xml',
+        '/.well-known/security.txt',
+        '/api/client-error',
+        '/api/validate'
+      ]);
+
+      if (isGetOrHead && !hasFileExtension && !knownRoutes.has(url.pathname)) {
+        return new Response('Not Found', {
+          status: 404,
+          headers: {
+            'content-type': 'text/plain; charset=UTF-8',
+            'cache-control': 'public, max-age=300, must-revalidate'
+          }
+        });
+      }
+
+      return fetch(request);
+    }
+
+    if (hasAssetsBinding) {
+      if (legalTarget) {
+        const rewritten = new Request(new URL(legalTarget, url.origin).toString(), request);
+        return env.ASSETS.fetch(rewritten);
+      }
+
+      if (url.pathname === '/404.html') {
+        const notFoundAsset = await env.ASSETS.fetch(request);
+        return new Response(notFoundAsset.body, {
+          status: 404,
+          headers: notFoundAsset.headers
+        });
+      }
+
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (
+        request.method === 'GET' &&
+        wantsHtml &&
+        (assetResponse.status === 404 || assetResponse.status >= 500)
+      ) {
+        const notFoundRequest = new Request(new URL('/404.html', url.origin).toString(), request);
+        const notFoundAsset = await env.ASSETS.fetch(notFoundRequest);
+        return new Response(notFoundAsset.body, {
+          status: 404,
+          headers: notFoundAsset.headers
+        });
+      }
+
+      return assetResponse;
     }
 
     return fetch(request);

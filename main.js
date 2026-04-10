@@ -1,4 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const reportClientError = (type, payload) => {
+    const body = JSON.stringify({
+      type,
+      payload,
+      href: window.location.href,
+      userAgent: navigator.userAgent,
+      ts: new Date().toISOString()
+    });
+
+    if (navigator.sendBeacon) {
+      const blob = new Blob([body], { type: 'application/json' });
+      navigator.sendBeacon('/api/client-error', blob);
+      return;
+    }
+
+    fetch('/api/client-error', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      keepalive: true
+    }).catch(() => {});
+  };
+
+  window.addEventListener('error', (event) => {
+    reportClientError('error', {
+      message: event.message,
+      filename: event.filename,
+      line: event.lineno,
+      column: event.colno
+    });
+  });
+
+  window.addEventListener('unhandledrejection', (event) => {
+    const reason = event.reason;
+    reportClientError('unhandledrejection', {
+      message: typeof reason === 'string' ? reason : reason?.message || 'unknown'
+    });
+  });
+
   const body = document.body;
   const nav = document.getElementById('nav');
   const hamburger = document.getElementById('hamburger');
@@ -50,23 +91,32 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBackToTop();
     window.addEventListener('scroll', toggleBackToTop, { passive: true });
     backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
   }
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
+    document.querySelectorAll('.sr').forEach((el) => el.classList.add('vis'));
+    document.querySelectorAll('video[autoplay]').forEach((video) => {
+      video.pause();
+      video.removeAttribute('autoplay');
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+  } else {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
-  const srObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add('vis');
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.sr').forEach((el) => srObserver.observe(el));
+    const srObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('vis');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.sr').forEach((el) => srObserver.observe(el));
+  }
 
   if (soundbars && !soundbars.children.length) {
     [12, 24, 18, 32, 20, 36, 14, 28, 22, 34, 18, 26, 16, 30].forEach((height) => {
@@ -80,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (heroImage) {
+  if (heroImage && !prefersReducedMotion) {
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       if (scrollY < window.innerHeight) {

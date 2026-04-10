@@ -8,4 +8,7 @@
   <url><loc>https://theoutback.im/history</loc><priority>0.7</priority></url>
   <url><loc>https://theoutback.im/find-us</loc><priority>0.8</priority></url>
   <url><loc>https://theoutback.im/contact</loc><priority>0.8</priority></url>
+  <url><loc>https://theoutback.im/privacy</loc><priority>0.3</priority></url>
+  <url><loc>https://theoutback.im/cookie-policy</loc><priority>0.3</priority></url>
+  <url><loc>https://theoutback.im/terms</loc><priority>0.3</priority></url>
 </urlset>

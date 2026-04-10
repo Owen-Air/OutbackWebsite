@@ -9,7 +9,15 @@
 <link rel="canonical" href="https://theoutback.im/thankyou.html">
 <meta property="og:title" content="Thank You &mdash; The Outback">
 <meta property="og:description" content="Your enquiry has been received by The Outback.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="The Outback">
+<meta property="og:image" content="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg">
 <meta property="og:url" content="https://theoutback.im/thankyou.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Thank You &mdash; The Outback">
+<meta name="twitter:description" content="Your enquiry has been received by The Outback.">
+<meta name="twitter:image" content="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg">
 <meta name="theme-color" content="#080808">
 <meta name="color-scheme" content="dark">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon48x48.png">
@@ -146,20 +154,7 @@
 </main>
 
 <script src="/main.js" defer></script>
-<script>
-  (function () {
-    var n = 5;
-    var el = document.getElementById('countdown');
-    var interval = setInterval(function () {
-      n--;
-      if (el) el.textContent = n;
-      if (n <= 0) {
-        clearInterval(interval);
-        window.location.replace('/contact');
-      }
-    }, 1000);
-  })();
-</script>
+<script src="/thankyou.js" defer></script>
 
 </body>
 </html>

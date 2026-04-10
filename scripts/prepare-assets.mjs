@@ -18,12 +18,16 @@ const rootEntries = [
   "index.html",
   "main.js",
   "menu.html",
+  "privacy.html",
+  "cookie-policy.html",
+  "terms.html",
   "robots.txt",
   "sitemap.xml",
   "spaces.html",
   "style.css",
   "team.html",
-  "thankyou.html"
+  "thankyou.html",
+  "thankyou.js"
 ];
 
 if (existsSync(publicDir)) {

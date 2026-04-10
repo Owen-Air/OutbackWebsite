@@ -317,6 +317,15 @@ section{padding:clamp(4rem,8vw,7rem) clamp(2rem,5vw,4rem)}
 .contact-detail-value{font-family:var(--fb);font-size:clamp(16px,0.95vw,20px);color:var(--text);text-decoration:none;font-weight:300;transition:color 0.2s}
 .contact-detail-value:hover{color:var(--orange)}
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
 /* CONTACT FORM */
 .contact-form{display:flex;flex-direction:column;gap:1rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}

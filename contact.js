@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const EMAIL_VALIDATION_MESSAGES = {
     missing_email: 'Enter an email address before sending your enquiry.',
     missing_turnstile: 'Please complete the captcha before sending your enquiry.',
+    rate_limited: 'Too many attempts. Please wait a minute and try again.',
     invalid_json: 'The validation request was invalid. Please try again.',
     invalid_syntax: 'That email address does not look valid.',
     turnstile_failed: 'Captcha verification failed. Please try again.',
