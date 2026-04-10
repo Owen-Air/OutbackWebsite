@@ -293,11 +293,9 @@ export default {
       return handleValidate(request, env);
     }
 
-    // Serve PNG favicon as .ico if requested
+    // Redirect .ico requests to the packaged PNG favicon asset.
     if (url.pathname === '/favicon.ico') {
-      return fetch('https://theoutback.im/favicon48x48.png', {
-        headers: { 'content-type': 'image/png' }
-      });
+      return Response.redirect(new URL('/favicon48x48.png', url.origin), 302);
     }
 
     if (
