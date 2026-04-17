@@ -216,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setNavState();
   setupScrollProgress();
-  setupCommandDock();
   setupPageTransitions();
   setupPointerAura();
   window.addEventListener('scroll', setNavState, { passive: true });
