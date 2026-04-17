@@ -1,0 +1,31 @@
+{
+  "name": "outback-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ./scripts/prepare-assets.mjs && wrangler dev --env=\"\"",
+    "build": "node ./scripts/prepare-assets.mjs",
+    "deploy": "node ./scripts/prepare-assets.mjs && wrangler deploy --env=\"\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "deploy:dev": "npm run deploy",
+    "deploy:live": "node -e \"console.error('Live deploy is disabled. Dev-only mode is enforced.'); process.exit(1)\""
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251112.0",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0",
+    "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.24.0"
+  }
+}

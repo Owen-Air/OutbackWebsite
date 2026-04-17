@@ -1,24 +1,35 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "outback-website-alpha",
-  "main": "worker.js",
-  "compatibility_date": "2026-04-09",
-  "observability": {
-    "enabled": true
+  // Cloudflare Worker service deployment - compatible with `npx wrangler deploy`
+  "name": "outbackwebsitedev",
+  "main": "./worker.ts",
+  "assets": {
+    "directory": "./dist"
   },
   "build": {
     "command": "node ./scripts/prepare-assets.mjs"
   },
-  "assets": {
-    "directory": "./public"
-  },
+  "compatibility_date": "2026-04-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // KV - already provisioned
   "kv_namespaces": [
-    {
-      "binding": "RATE_LIMIT",
-      "id": "bffa2f8dc14347968c0e046fab1b8469"
-    }
+    { "binding": "RATE_LIMIT", "id": "bffa2f8dc14347968c0e046fab1b8469" }
   ],
-  "routes": [
-    "theoutback.im/*"
-  ]
+
+  // Provision these in the Cloudflare dashboard then uncomment:
+  // "d1_databases": [{ "binding": "CONTACT_DB", "database_name": "outback-contact-db-dev", "database_id": "TODO" }],
+  // "r2_buckets":   [{ "binding": "MEDIA_BUCKET", "bucket_name": "outback-media-dev" }],
+  // "queues": { "producers": [{ "binding": "CONTACT_QUEUE", "queue": "outback-contact-queue-dev" }] },
+
+  "env": {
+    "production": {
+      "name": "outback-website-alpha",
+      "routes": ["theoutback.im/*"],
+      "kv_namespaces": [
+        { "binding": "RATE_LIMIT", "id": "TODO_PROD_KV_ID" }
+      ]
+    }
+  }
 }

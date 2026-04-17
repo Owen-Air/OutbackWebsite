@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="/style.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
-<body data-nav="fixed">
+<body data-nav="fixed" data-page="contact">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <header>
@@ -59,26 +59,36 @@
   </div>
 </div>
 
-<div class="contact-page-grid">
+<section class="nova-sub-hero nova-sub-hero-contact reveal">
+  <div class="nova-sub-hero-copy">
+    <p>Direct Line</p>
+    <h2>LET'S BUILD<br>YOUR NIGHT.</h2>
+  </div>
+  <div class="nova-sub-hero-media">
+    <img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/top-bar-red-lighting-the-outback.jpg" alt="Inside the Outback atmosphere">
+  </div>
+</section>
+
+<div class="contact-page-grid contact-stage">
   <div class="contact-page-block">
     <p class="info-label" style="margin-bottom:2rem">Send Us a Message</p>
-    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="576014a8-99fd-42c1-84e2-826a31705d39">
+    <form class="contact-form" method="POST" novalidate>
       <input type="hidden" name="subject" value="New enquiry from The Outback website">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
       <div class="form-row">
         <div class="form-group">
           <label class="form-label" for="name">Name</label>
-          <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required>
         </div>
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
-          <input class="form-input" type="email" id="email" name="email" placeholder="you@email.com" required>
+          <input class="form-input" type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label" for="phone">Phone (optional)</label>
-          <input class="form-input" type="tel" id="phone" name="phone" placeholder="+44 7xxx xxxxxx">
+          <input class="form-input" type="tel" id="phone" name="phone" placeholder="+44 7xxx xxxxxx" autocomplete="tel">
         </div>
         <div class="form-group">
           <label class="form-label" for="enquiry">Enquiry Type</label>
@@ -119,7 +129,7 @@
       <div class="contact-detail-icon">@</div>
       <div class="contact-detail-text">
         <span class="contact-detail-label">Email</span>
-        <a class="contact-detail-value" id="emailLink">Loading...</a>
+        <a class="contact-detail-value" href="mailto:info@theoutback.im">info@theoutback.im</a>
       </div>
     </div>
     <div class="contact-detail">

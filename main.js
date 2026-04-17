@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clientErrorReportingEnabled = false;
 
   const reportClientError = (type, payload) => {
+    if (!clientErrorReportingEnabled) return;
+
     const body = JSON.stringify({
       type,
       payload,
@@ -49,6 +52,150 @@ document.addEventListener('DOMContentLoaded', () => {
   const soundbars = document.getElementById('soundbars');
   const heroImage = document.querySelector('.hero-bg img');
 
+  const setupScrollProgress = () => {
+    const rail = document.createElement('div');
+    rail.className = 'site-progress';
+    const bar = document.createElement('span');
+    rail.appendChild(bar);
+    document.body.appendChild(rail);
+
+    const update = () => {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const value = Math.min(1, Math.max(0, window.scrollY / max));
+      bar.style.transform = `scaleX(${value.toFixed(4)})`;
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  };
+
+  const setupCommandDock = () => {
+    const links = [
+      ['Home', '/'],
+      ['Spaces', '/spaces'],
+      ['Events', '/events'],
+      ['Drinks', '/menu'],
+      ['Team', '/team'],
+      ['History', '/history'],
+      ['Find Us', '/find-us'],
+      ['Contact', '/contact']
+    ];
+
+    const dock = document.createElement('aside');
+    dock.className = 'nova-dock';
+    dock.setAttribute('aria-label', 'Quick navigation');
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'nova-dock-trigger';
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-controls', 'novaDockMenu');
+    trigger.setAttribute('aria-label', 'Open quick navigation');
+    trigger.textContent = 'NAV';
+
+    const menu = document.createElement('div');
+    menu.className = 'nova-dock-menu';
+    menu.id = 'novaDockMenu';
+
+    links.forEach(([label, href]) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = label;
+      if (window.location.pathname === href) {
+        a.classList.add('active');
+      }
+      menu.appendChild(a);
+    });
+
+    dock.appendChild(trigger);
+    dock.appendChild(menu);
+    document.body.appendChild(dock);
+
+    const setOpen = (open) => {
+      dock.classList.toggle('open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+
+    trigger.addEventListener('click', () => {
+      setOpen(!dock.classList.contains('open'));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!dock.contains(event.target)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setOpen(!dock.classList.contains('open'));
+      }
+    });
+  };
+
+  const setupPageTransitions = () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'page-transition';
+    document.body.appendChild(overlay);
+
+    document.querySelectorAll('a[href]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        if (
+          anchor.target === '_blank' ||
+          anchor.hasAttribute('download') ||
+          anchor.getAttribute('href')?.startsWith('#') ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        const url = new URL(anchor.href, window.location.origin);
+        if (url.origin !== window.location.origin || url.pathname === window.location.pathname) {
+          return;
+        }
+
+        event.preventDefault();
+        overlay.classList.add('show');
+        window.setTimeout(() => {
+          window.location.assign(url.toString());
+        }, 180);
+      });
+    });
+  };
+
+  const setupPointerAura = () => {
+    if (prefersReducedMotion) return;
+
+    const aura = document.createElement('div');
+    aura.className = 'pointer-aura';
+    document.body.appendChild(aura);
+
+    let rafId = 0;
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+    let tx = x;
+    let ty = y;
+
+    const render = () => {
+      x += (tx - x) * 0.16;
+      y += (ty - y) * 0.16;
+      aura.style.transform = `translate(${x}px, ${y}px)`;
+      rafId = window.requestAnimationFrame(render);
+    };
+
+    window.addEventListener('pointermove', (event) => {
+      tx = event.clientX;
+      ty = event.clientY;
+    });
+
+    rafId = window.requestAnimationFrame(render);
+    window.addEventListener('beforeunload', () => window.cancelAnimationFrame(rafId));
+  };
+
   const setNavState = () => {
     if (!nav) return;
     const shouldScroll = body.dataset.nav === 'scroll' || !!document.querySelector('.hero');
@@ -68,6 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setNavState();
+  setupScrollProgress();
+  setupCommandDock();
+  setupPageTransitions();
+  setupPointerAura();
   window.addEventListener('scroll', setNavState, { passive: true });
 
   if (hamburger && mobileNav) {

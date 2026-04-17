@@ -7,3 +7,7 @@
 public/
 images/
 Videos/
+node_modules/
+dist/
+.tsc-out/
+coverage/

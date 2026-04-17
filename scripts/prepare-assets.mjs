@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
-const publicDir = path.join(repoRoot, "public");
+const publicDir = path.join(repoRoot, "dist");
 
 const rootEntries = [
   "_headers",
@@ -41,4 +41,4 @@ for (const entry of rootEntries) {
 }
 
 const copied = readdirSync(publicDir);
-console.log(`Prepared public assets in ${publicDir} with ${copied.length} top-level entries.`);
+console.log(`Prepared dist assets in ${publicDir} with ${copied.length} top-level entries.`);
