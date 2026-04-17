@@ -69,50 +69,31 @@
 </header>
 
 <main id="main-content">
-<section class="nova-hero" id="home">
-  <div class="nova-hero-media">
-    <video autoplay muted loop playsinline preload="metadata" poster="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg" aria-label="Inside The Outback venue">
-      <source src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/inside-venue-loop-3.mp4" type="video/mp4">
-    </video>
-    <img class="nova-hero-fallback" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg" alt="The Outback on Barrack Street, Douglas" fetchpriority="high">
+<section class="hero" id="home">
+  <div class="hero-bg"><img class="hero-crowd-img" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg" alt="The Outback on Barrack Street, Douglas" fetchpriority="high"></div>
+  <div class="hero-tint"></div>
+  <div class="hero-grain"></div>
+  <h1 class="hero-title" style="opacity:0;animation:fadeUp 0.9s 0.3s forwards">THE<em>OUTBACK</em></h1>
+  <p style="position:relative;font-family:var(--fc);font-size:clamp(16px,2.5vw,22px);letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.9s 0.6s forwards">Sports Bar &amp; Nightclub &mdash; Douglas, Isle of Man</p>
+  <p class="hero-sub">Barrack Street, Douglas &mdash; built for proper nights out on the island. Five spaces, three sound systems, one venue.</p>
+  <div class="hero-ctas">
+    <a href="/spaces" class="btn-primary">Explore the Venue</a>
+    <a href="/find-us" class="btn-ghost">Find Us</a>
   </div>
-  <div class="nova-hero-mask"></div>
-  <div class="nova-hero-noise"></div>
-
-  <div class="nova-hero-content reveal">
-    <p class="nova-overline">Douglas, Isle of Man</p>
-    <h1>THE NIGHT HAS<br><span>A NEW STANDARD</span></h1>
-    <p>The Outback is rebuilt around atmosphere, sound, and movement. Five spaces. Three systems. One venue designed for nights that scale from drinks to full send.</p>
-    <div class="nova-hero-cta">
-      <a href="/spaces" class="btn-primary">Enter The Venue</a>
-      <a href="/events" class="btn-ghost">See Nights</a>
-    </div>
-  </div>
-
-  <div class="nova-stat-grid reveal">
-    <article>
-      <strong>05</strong>
-      <span>Distinct spaces with their own tempo</span>
-    </article>
-    <article>
-      <strong>03</strong>
-      <span>Independent sound environments</span>
-    </article>
-    <article>
-      <strong>01</strong>
-      <span>Unified venue experience from entry to close</span>
-    </article>
-  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<section class="nova-signal reveal">
-  <p>VOID ACOUSTICS</p>
-  <p>FOHHN AUDIO</p>
-  <p>MIDDLE BAR</p>
-  <p>DANCEFLOOR</p>
-  <p>PRIVATE HIRE</p>
-  <p>BARRACK STREET</p>
-</section>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">DJ Nights <span>&bull;</span> Middle Bar <span>&bull;</span> Live Sets <span>&bull;</span> Late Nights <span>&bull;</span> Dancefloor <span>&bull;</span> Void Acoustics <span>&bull;</span> Fohhn Audio <span>&bull;</span> Private Hire <span>&bull;</span> Barrack Street <span>&bull;</span> Isle of Man <span>&bull;</span> DJ Nights <span>&bull;</span> Middle Bar <span>&bull;</span> Live Sets <span>&bull;</span> Late Nights <span>&bull;</span> Dancefloor <span>&bull;</span> Void Acoustics <span>&bull;</span> Fohhn Audio <span>&bull;</span> Private Hire <span>&bull;</span> Barrack Street <span>&bull;</span> Isle of Man</div>
+    <div class="marquee-item">DJ Nights <span>&bull;</span> Middle Bar <span>&bull;</span> Live Sets <span>&bull;</span> Late Nights <span>&bull;</span> Dancefloor <span>&bull;</span> Void Acoustics <span>&bull;</span> Fohhn Audio <span>&bull;</span> Private Hire <span>&bull;</span> Barrack Street <span>&bull;</span> Isle of Man <span>&bull;</span> DJ Nights <span>&bull;</span> Middle Bar <span>&bull;</span> Live Sets <span>&bull;</span> Late Nights <span>&bull;</span> Dancefloor <span>&bull;</span> Void Acoustics <span>&bull;</span> Fohhn Audio <span>&bull;</span> Private Hire <span>&bull;</span> Barrack Street <span>&bull;</span> Isle of Man</div>
+  </div>
+</div>
+
+<div class="sound-strip">
+  <div class="sound-strip-text">VOID ACOUSTICS &middot; FOHHN AUDIO &middot; THREE SYSTEMS &middot; ONE VENUE</div>
+  <div class="sound-bars" id="soundbars"></div>
+</div>
 
 <section class="nova-cards" aria-label="Core experiences at The Outback">
   <article class="nova-card reveal">
@@ -138,16 +119,20 @@
   </article>
 </section>
 
-<section class="nova-wall" aria-label="Visual gallery of the venue">
-  <div class="nova-wall-a reveal">
-    <video loading="lazy" autoplay muted loop playsinline preload="none" poster="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/exterior-queue-the-outback.jpg" aria-label="Inside venue loop at The Outback">
-      <source src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/inside-venue-loop-2.mp4" type="video/mp4">
-    </video>
+<section class="gallery-section">
+  <p class="section-label sr">The Outback</p>
+  <h2 class="section-title sr sr-d1">INSIDE THE<br>VENUE</h2>
+  <div class="gallery-mosaic">
+    <div class="g-cell video-cell"><video loading="lazy" autoplay muted loop playsinline preload="none" poster="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/exterior-queue-the-outback.jpg" aria-label="Inside the venue clip two at The Outback"><source src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/inside-venue-loop-2.mp4" type="video/mp4"></video></div>
+    <div class="g-cell video-cell"><video loading="lazy" autoplay muted loop playsinline preload="none" poster="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/img_3396.jpg" aria-label="Inside the venue clip three at The Outback"><source src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/inside-venue-loop-3.mp4" type="video/mp4"></video></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/dj-booth-view-over-the-dancefloor-the.jpg" alt="DJ Booth"><div class="g-overlay"><span class="g-label">DJ Booth</span></div></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/top-bar-the-outback-new.jpg" alt="Top Bar"><div class="g-overlay"><span class="g-label">Top Bar</span></div></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/the-outback-barrack-street-douglas.jpg" alt="The Outback on Barrack Street, Douglas"><div class="g-overlay"><span class="g-label">Barrack Street</span></div></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/middle-bar-overview-the-outback.jpg" alt="The Venue"><div class="g-overlay"><span class="g-label">The Venue</span></div></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/pioneer-dj-booth-the-outback.jpg" alt="On the Decks"><div class="g-overlay"><span class="g-label">On the Decks</span></div></div>
+    <div class="g-cell"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/queue-outside-the-outback-douglas.jpg" alt="Exterior"><div class="g-overlay"><span class="g-label">Exterior</span></div></div>
+    <div class="g-cell portrait crowd-fullheight"><img class="gallery-crowd-img" loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/661164356_2122733031676240_843822741065328171_n.jpg" alt="Outback Crowd"><div class="g-overlay"><span class="g-label">Crowd</span></div></div>
   </div>
-  <div class="nova-wall-b reveal"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/pioneer-dj-booth-the-outback.jpg" alt="Pioneer DJ booth at The Outback"></div>
-  <div class="nova-wall-c reveal"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/middle-bar-overview-the-outback.jpg" alt="Middle Bar overview at The Outback"></div>
-  <div class="nova-wall-d reveal"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/queue-outside-the-outback-douglas.jpg" alt="Queue outside The Outback"></div>
-  <div class="nova-wall-e reveal"><img loading="lazy" src="https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev/661164356_2122733031676240_843822741065328171_n.jpg" alt="The Outback crowd"></div>
 </section>
 
 <section class="nova-events reveal">
