@@ -1390,10 +1390,7 @@ footer {
 
 footer {
   margin: clamp(2.5rem, 6vw, 4rem);
-  border-radius: 18px;
-  border: 1px solid rgba(255, 143, 43, 0.18);
-  box-shadow: 0 28px 62px rgba(0, 0, 0, 0.46);
-
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
   background:
     radial-gradient(circle at 12% 0%, rgba(255, 143, 43, 0.22), transparent 35%),
     linear-gradient(180deg, #1a1316 0%, #0f0d0f 100%);
