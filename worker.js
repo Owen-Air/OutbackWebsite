@@ -379,14 +379,13 @@ async function evaluateEmailAddress(env, email) {
   const apiKey = env.MAILBOXVALIDATOR_API_KEY;
 
   if (!apiKey || apiKey === '__SET_THIS_OUTSIDE_SOURCE_CONTROL__') {
+    // No API key configured — fall back to basic syntax check
     return {
-      ok: false,
-      status: 500,
-      reason: 'validation_service_unavailable',
+      ok: EMAIL_SYNTAX_REGEX.test(email),
+      status: EMAIL_SYNTAX_REGEX.test(email) ? 200 : 400,
+      reason: EMAIL_SYNTAX_REGEX.test(email) ? 'accepted' : 'invalid_syntax',
       mailboxvalidator_score: null,
-      details: {
-        message: 'MailboxValidator API key is not configured.'
-      }
+      details: { fallback: true, message: 'Email validator not configured; basic check only.' }
     };
   }
 
@@ -431,28 +430,27 @@ async function evaluateEmailAddress(env, email) {
     });
 
     if (!response.ok) {
+      // MailboxValidator API unavailable — fall back to syntax-only acceptance
+      console.log('mailboxvalidator-fallback', { status: response.status, email });
       return {
-        ok: false,
-        status: 502,
-        reason: 'validation_service_error',
+        ok: EMAIL_SYNTAX_REGEX.test(email),
+        status: EMAIL_SYNTAX_REGEX.test(email) ? 200 : 400,
+        reason: EMAIL_SYNTAX_REGEX.test(email) ? 'accepted' : 'invalid_syntax',
         mailboxvalidator_score: null,
-        details: {
-          status_code: response.status,
-          message: 'MailboxValidator request failed.'
-        }
+        details: { fallback: true, message: 'Email validator unavailable; basic check only.' }
       };
     }
 
     mailboxvalidatorPayload = await response.json();
   } catch {
+    // Network error — fall back to syntax-only acceptance
+    console.log('mailboxvalidator-fallback', { reason: 'network_error', email });
     return {
-      ok: false,
-      status: 502,
-      reason: 'validation_service_error',
+      ok: EMAIL_SYNTAX_REGEX.test(email),
+      status: EMAIL_SYNTAX_REGEX.test(email) ? 200 : 400,
+      reason: EMAIL_SYNTAX_REGEX.test(email) ? 'accepted' : 'invalid_syntax',
       mailboxvalidator_score: null,
-      details: {
-        message: 'MailboxValidator request failed.'
-      }
+      details: { fallback: true, message: 'Email validator unavailable; basic check only.' }
     };
   }
 
