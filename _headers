@@ -7,7 +7,7 @@
   Cross-Origin-Resource-Policy: same-site
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), autoplay=(self), camera=(), clipboard-read=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), screen-wake-lock=(), usb=(), web-share=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; media-src 'self' https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; frame-src https://www.google.com https://maps.google.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; media-src 'self' https://pub-22e52a77ba4a48e5a890a74fc79f7fcf.r2.dev; frame-src https://www.google.com https://maps.google.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://api.web3forms.com; form-action 'self'; upgrade-insecure-requests
 
 /images/*
   Cache-Control: public, max-age=31536000, immutable
