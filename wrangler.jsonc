@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   // Cloudflare Worker service deployment - compatible with `npx wrangler deploy`
-  "name": "outbackwebsitedev",
+  "name": "outback-website-alpha",
   "main": "./worker.ts",
   "assets": {
     "directory": "./dist"
