@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const data = {};
       new FormData(form).forEach((value, key) => { data[key] = value; });
+      // Web3Forms free plan rejects Turnstile fields; omit them from payload.
+      delete data['cf-turnstile-response'];
+      delete data.turnstileToken;
+      delete data['g-recaptcha-response'];
       data.access_key = '576014a8-99fd-42c1-84e2-826a31705d39';
 
       const res = await fetch('https://api.web3forms.com/submit', {
