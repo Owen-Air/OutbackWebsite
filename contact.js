@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form = document.querySelector('.contact-form');
   if (!form) return;
+  const submitButton = form.querySelector('.form-submit');
+  const turnstileContainer = form.querySelector('.cf-turnstile');
 
   const showOverlay = (title, message) => {
     const overlay = document.createElement('div');
@@ -25,11 +27,42 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(overlay);
   };
 
+  const getTurnstileToken = () => {
+    const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
+    return typeof tokenInput?.value === 'string' ? tokenInput.value.trim() : '';
+  };
+
+  if (submitButton && turnstileContainer) {
+    // Front-end gate: only show/send after Turnstile is completed.
+    submitButton.style.display = 'none';
+    submitButton.disabled = true;
+
+    const gateHint = document.createElement('p');
+    gateHint.className = 'form-note';
+    gateHint.style.marginTop = '0.75rem';
+    gateHint.textContent = 'Complete the captcha to enable the submit button.';
+    turnstileContainer.insertAdjacentElement('afterend', gateHint);
+
+    const syncSubmitGate = () => {
+      const solved = getTurnstileToken().length > 0;
+      submitButton.style.display = solved ? '' : 'none';
+      submitButton.disabled = !solved;
+      gateHint.style.display = solved ? 'none' : '';
+    };
+
+    syncSubmitGate();
+    window.setInterval(syncSubmitGate, 400);
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const submitButton = form.querySelector('.form-submit');
     if (!submitButton) return;
+
+    if (turnstileContainer && !getTurnstileToken()) {
+      showOverlay('CAPTCHA REQUIRED', 'Please complete the captcha before sending your enquiry.');
+      return;
+    }
 
     // Client-side rate limit: 1 per minute
     const lastSubmit = localStorage.getItem('contactFormLastSubmit');
